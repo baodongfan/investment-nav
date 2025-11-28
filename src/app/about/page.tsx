@@ -30,31 +30,33 @@ export default function About() {
                 <span className="text-5xl">🚀</span>
               </div>
               <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
-                Nico投资有道
+                我的投资导航指引
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                爱投资的程序员，美股/比特币长期投资者
+                从投机交易往投资方向转变的Brandon
               </p>
+              {/*这里是左边作者社交媒体链接的占位符
               <div className="flex justify-center gap-4">
                 <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold">X/Twitter</a>
                 <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold">YouTube</a>
                 <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold">Telegram</a>
               </div>
+              */}
             </div>
 
             {/* Mission */}
             <div className="md:col-span-2">
               <h3 className="text-3xl font-bold text-black dark:text-white mb-6">
-                我们的使命
+                我的想法
               </h3>
               <p className="text-gray-600 dark:text-gray-400 text-lg mb-4 leading-relaxed">
-                建立一个专业、全面、免费的投资导航平台，帮助每一位投资者（特别是新手小白）快速找到优质的投资资源和工具。
+                建立一个全面、免费的投资导航平台，自用的同时分享优质的投资资源和工具。
               </p>
               <p className="text-gray-600 dark:text-gray-400 text-lg mb-4 leading-relaxed">
-                我们相信，长期定投可能是普通人财富自由的最简单方式。通过系统的教育和实用的工具，我们希望让投资变得更加简单、透明和民主化。
+                我相信，长期定投可能是普通人财富自由的最简单方式。通过系统的教育和实用的工具，我希望让投资变得更加简单、透明和民主化。
               </p>
               <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
-                这个平台完全免费，没有任何隐藏费用或商业变现目的。我们的初心就是为投资者社区做出贡献。
+                这个平台完全免费，没有任何隐藏费用或商业变现目的。初心就是为投资者社区做出贡献。
               </p>
             </div>
           </div>
@@ -184,11 +186,13 @@ export default function About() {
                 发送邮件
               </a>
               <a href="#" className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
-                加入Telegram社区
+                Telegram社区建设中。。
               </a>
+              {/*
               <a href="#" className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
-                关注X/Twitter
+                关注X/Twitter。。
               </a>
+              */}
             </div>
           </div>
         </div>
@@ -220,7 +224,7 @@ export default function About() {
       {/* Footer */}
       <footer className="bg-black dark:bg-gray-950 text-white py-12 px-4">
         <div className="max-w-6xl mx-auto text-center text-gray-400">
-          <p>&copy; 2024 投资导航. 由Nico投资有道精心打造.</p>
+          <p>&copy; 2025 投资导航. 由行者Brandon整理打造.</p>
           <p className="mt-2">完全免费，不包含任何商业变现</p>
         </div>
       </footer>

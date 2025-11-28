@@ -29,7 +29,7 @@ export default function Navigation() {
           <div className="hidden md:flex items-center gap-6">
             <Link
               href="/"
-              className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition"
+              className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-semibold text-red-500"
             >
               主页
             </Link>
@@ -37,31 +37,31 @@ export default function Navigation() {
               href="/websites"
               className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-semibold text-red-500"
             >
-              网站聚合 Hot
+              网站聚合
             </Link>
             <Link
               href="/tutorials"
               className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-semibold text-red-500"
             >
-              投资教程 Hot
+              投资教程 
             </Link>
             <Link
               href="/articles"
               className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-semibold text-red-500"
             >
-              投资精选文章 Hot New
+              投资精选文章 
             </Link>
             <Link
               href="/tools"
               className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-semibold text-red-500"
             >
-              投资工具 Hot New
+              投资工具 
             </Link>
             <Link
               href="/about"
-              className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition"
+              className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition font-semibold text-red-500 "
             >
-              关于作者
+              关于本站
             </Link>
           </div>
 
