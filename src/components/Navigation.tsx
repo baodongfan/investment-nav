@@ -1,23 +1,21 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 export default function Navigation() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(true); // sidebar open (desktop)
-  const [mobileOpen, setMobileOpen] = useState<boolean>(false); // mobile overlay
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
-  // initialize theme from localStorage or system
+  // theme init (can stay useEffect)
   useEffect(() => {
     try {
       const saved = localStorage.getItem('theme');
       if (saved === 'dark') setIsDarkMode(true);
       else if (saved === 'light') setIsDarkMode(false);
       else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setIsDarkMode(true);
-    } catch (e) {
-      // ignore
-    }
+    } catch (e) {}
   }, []);
 
   // apply theme class and persist
@@ -35,21 +33,22 @@ export default function Navigation() {
     }
   }, [isDarkMode]);
 
-  // Sync sidebar width into CSS var for layout pushing
-  useEffect(() => {
+  // Use useLayoutEffect so --sidebar-width is set before paint (prevents first-click flicker)
+  useLayoutEffect(() => {
     const root = document.documentElement;
     root.style.setProperty('--sidebar-width', isOpen ? '16rem' : '4rem');
     if (isOpen) root.classList.add('sidebar-open');
     else root.classList.remove('sidebar-open');
   }, [isOpen]);
 
-  useEffect(() => {
+  // ensure initial value before first paint as well
+  useLayoutEffect(() => {
     document.documentElement.style.setProperty('--sidebar-width', isOpen ? '16rem' : '4rem');
   }, []);
 
-  const toggleTheme = () => setIsDarkMode((v) => !v);
-  const toggleSidebar = () => setIsOpen((v) => !v);
-  const toggleMobile = () => setMobileOpen((v) => !v);
+  const toggleTheme = () => setIsDarkMode(v => !v);
+  const toggleSidebar = () => setIsOpen(v => !v);
+  const toggleMobile = () => setMobileOpen(v => !v);
 
   const items = [
     { href: '/', label: '主页', icon: '🏠' },
@@ -81,14 +80,15 @@ export default function Navigation() {
         </div>
       </div>
 
-      {/* Desktop Sidebar */}
+      {/* Sidebar: width driven by CSS var for smooth, sync behavior */}
       <aside
         className={`
-          fixed top-0 left-0 h-full z-50 transform transition-all duration-200
+          sidebar   /* <-- new helper class */
+          fixed top-0 left-0 h-full z-50
           bg-white dark:bg-black border-r border-gray-200 dark:border-gray-800
-          ${isOpen ? 'w-64' : 'w-16'}
           hidden md:block
         `}
+        style={{ width: 'var(--sidebar-width)' }} // use CSS var for both layout and this element
         aria-expanded={isOpen}
       >
         <div className="h-full flex flex-col">

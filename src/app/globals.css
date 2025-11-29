@@ -3,7 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --sidebar-width: 16rem; /* matches w-64 */
+  --sidebar-width: 16rem; /* default */
 }
 
 @theme inline {
@@ -20,7 +20,15 @@
   }
 }
 
-/* Only on desktop and up, push main content by the sidebar width */
+/* ensure sidebar clips children and animates width (no visual leak) */
+.sidebar {
+  overflow: hidden;
+  min-width: 4rem;           /* collapsed minimum */
+  transition: width 200ms ease;
+  will-change: width;
+}
+
+/* Desktop: push main by sidebar width */
 @media (min-width: 768px) {
   .with-sidebar {
     margin-left: var(--sidebar-width);
