@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --sidebar-width: 16rem; /* matches w-64 */
 }
 
 @theme inline {
@@ -16,6 +17,14 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+  }
+}
+
+/* Only on desktop and up, push main content by the sidebar width */
+@media (min-width: 768px) {
+  .with-sidebar {
+    margin-left: var(--sidebar-width);
+    transition: margin-left 200ms ease;
   }
 }
 

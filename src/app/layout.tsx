@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navigation from "../components/Navigation";
 
 export const metadata: Metadata = {
   title: "投资导航 - 美股&加密货币投资导航平台",
@@ -15,7 +16,10 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className="antialiased">
-        {children}
+        <Navigation />
+        {/* add the with-sidebar class so desktop content is pushed by CSS var */}
+        {/* the media query in globals.css ensures this only applies on md+ */}
+        <main className="with-sidebar transition-all">{children}</main>
       </body>
     </html>
   );
