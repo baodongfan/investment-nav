@@ -221,14 +221,6 @@ MIT License
 
 欢迎提交 Issue 和 Pull Request！
 
-## 📮 联系方式
-
-- Twitter: [@tychozzz](https://x.com/tychozzz)
-- Telegram: [nicoinvestmentfriends](https://t.me/nicoinvestmentfriends)
-- YouTube: [@NicoGrowthz](https://www.youtube.com/@NicoGrowthz)
-
----
-
 **投资导航** - 专为美股&加密货币投资而生 🚀
 
 2024 © All rights reserved.
