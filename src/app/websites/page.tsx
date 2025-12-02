@@ -82,20 +82,46 @@ export default function Websites() {
                 href={website.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition hover:border-blue-400 dark:hover:border-blue-500"
+                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition hover:border-blue-400 dark:hover:border-blue-500 group flex flex-col"
               >
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-lg font-bold text-black dark:text-white flex-1">
-                    {website.name}
-                  </h3>
-                  <span className="text-xl ml-2">🔗</span>
+                {/* Card Header with Icon */}
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="flex-shrink-0">
+                    {/* 懒人技巧：自动获取 Favicon */}
+                    {/* 如果 website.icon 有值则使用自定义的，否则去 Google 获取 */}
+                    <img
+                      src={
+                        website.icon ||
+                        `https://www.google.com/s2/favicons?domain=${website.url}&sz=64`
+                      }
+                      alt={website.name}
+                      className="w-12 h-12 rounded-lg bg-gray-50 dark:bg-gray-800 p-1 object-contain border border-gray-100 dark:border-gray-700"
+                      // 增加 loading="lazy" 提升性能
+                      loading="lazy"
+                    />
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-bold text-black dark:text-white truncate pr-2">
+                        {website.name}
+                      </h3>
+                      <span className="text-gray-400 group-hover:text-blue-500 transition-colors flex-shrink-0">
+                        ↗
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2 flex-1">
                   {website.description}
                 </p>
-                <span className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-semibold">
-                  {website.category}
-                </span>
+                
+                <div className="mt-auto">
+                  <span className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-semibold">
+                    {website.category}
+                  </span>
+                </div>
               </a>
             ))}
           </div>

@@ -5,6 +5,7 @@ export interface Website {
   description: string;
   url: string;
   category: string;
+  icon?: string; // 问号代表可选，不填就显示默认：网站图标URL
 }
 
 export interface Tutorial {
