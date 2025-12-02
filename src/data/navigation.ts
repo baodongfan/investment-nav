@@ -55,11 +55,40 @@ export const websites: Website[] = [
     category: "市场分析",
   },
   {
+    id: "ETF Database",
+    name: "ETF Database",
+    description: "ETF 数据库，提供全面的ETF信息和筛选工具",
+    url: "https://etfdb.com/",
+    category: "美股投资",
+  },
+  {
+    id: "ETF Overlap Tool",
+    name: "ETF Overlap Tool",
+    description: "ETF 分析，重叠度查询工具，对比不同ETF的持仓重叠情况",
+    url: "https://www.etfrc.com/funds/overlap.php",
+    category: "美股投资",
+  },
+  {
+    id: "finviz-screener",
+    name: "Finviz Screener",
+    description: "强大的美股筛选工具，根据多种条件筛选股票，网站还有丰富的市场新闻和分析及热力图",
+    url: "https://finviz.com/screener.ashx",
+    category: "美股投资",
+  },
+  
+  {
     id: "investopedia",
     name: "Investopedia",
     description: "投资教育和金融知识平台",
     url: "https://www.investopedia.com",
     category: "投资教育",
+  },
+  {
+    id: "Stock Analysis",
+    name: "Stock Analysis",
+    description: "股票分析和研究平台，提供详尽的公司财务数据和估值模型、个股新闻、forecasts、recommendation Trends等",
+    url: "https://stockanalysis.com/",
+    category: "投资分析",
   },
   {
     id: "seeking-alpha",
