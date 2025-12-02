@@ -36,7 +36,7 @@ export default async function ArticleDetail({ params }: PageProps) {
           <div className="mb-10 text-sm text-gray-500 font-medium tracking-wide">
             <Link 
               href="/articles" 
-              className="hover:text-blue-600 transition-colors flex items-center gap-1"
+              className="hover:text-violet-600 transition-colors flex items-center gap-1"
             >
               ← 返回列表
             </Link>
@@ -45,7 +45,7 @@ export default async function ArticleDetail({ params }: PageProps) {
           {/* 头部 */}
           <header className="mb-16 border-b border-gray-100 dark:border-gray-800 pb-10">
             <div className="flex gap-3 mb-6">
-              <span className="inline-block px-4 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-bold tracking-wide">
+              <span className="inline-block px-4 py-1.5 bg-violet-50 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full text-sm font-bold tracking-wide">
                 {article.category}
               </span>
             </div>
@@ -78,7 +78,7 @@ export default async function ArticleDetail({ params }: PageProps) {
              <p className="text-gray-400 text-sm">感谢阅读</p>
              <Link 
                href="/articles" 
-               className="text-blue-600 font-bold hover:text-blue-800 transition-colors flex items-center gap-1"
+               className="text-violet-600 font-bold hover:text-violet-800 transition-colors flex items-center gap-1"
              >
                阅读更多文章 →
              </Link>

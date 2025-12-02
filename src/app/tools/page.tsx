@@ -62,7 +62,7 @@ export default function ToolsPage() {
 							<p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
 								{tool.description}
 							</p>
-							<button className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium">
+							<button className="text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 text-sm font-medium">
 								即将上线 →
 							</button>
 						</div>

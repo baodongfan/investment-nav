@@ -1,63 +1,49 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* 1. 默认模式（亮色）的变量 */
+/* 核心修复：强制 dark: 前缀监听类名 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 1. 默认模式（亮色） */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 背景稍微带一点点冷色调，不完全是纯白，更护眼 */
+  --background: #ffffff; 
+  --foreground: #0f172a; /* Slate-900 */
   --sidebar-width: 16rem;
   
-  /* 排版基础颜色（亮色） */
-  --tw-prose-body: #374151;
-  --tw-prose-headings: #111827;
-  --tw-prose-links: #2563eb;
-  --tw-prose-quotes: #4b5563;
-  --tw-prose-code: #ea580c;
-  --tw-prose-pre-bg: #1e293b;
+  /* 排版颜色 */
+  --tw-prose-body: #334155;        /* Slate-700 */
+  --tw-prose-headings: #0f172a;    /* Slate-900 */
+  --tw-prose-links: #7c3aed;       /* Violet-600 (链接变紫色) */
+  --tw-prose-quotes: #475569;      /* Slate-600 */
+  --tw-prose-code: #d946ef;        /* Fuchsia-500 (代码高亮更骚气) */
+  --tw-prose-pre-bg: #1e293b;      /* Slate-800 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   
-  --font-sans: "Inter", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  --font-serif: "Noto Serif SC", "Songti SC", "SimSun", "Times New Roman", serif;
-  --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  /* 定义更现代的字体栈 */
+  --font-sans: "Plus Jakarta Sans", "Inter", "Noto Sans SC", "PingFang SC", sans-serif;
+  --font-serif: "Noto Serif SC", "Songti SC", serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
-/* 👇 关键修改：
-   原来是 @media (prefers-color-scheme: dark) { :root { ... } }
-   现在改为 .dark { ... }
-   这样只要 html 标签上有 dark 类，这套变量就会生效 
-*/
+/* 2. 暗黑模式（高级深蓝灰） */
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #020617; /* Slate-950 (比纯黑更有质感) */
+  --foreground: #f1f5f9; /* Slate-100 */
   
-  /* 排版颜色（暗色） */
-  --tw-prose-body: #d1d5db;
-  --tw-prose-headings: #f3f4f6;
-  --tw-prose-links: #60a5fa;
-  --tw-prose-quotes: #9ca3af;
-  --tw-prose-code: #fb923c;
-  --tw-prose-pre-bg: #111827;
+  --tw-prose-body: #cbd5e1;        /* Slate-300 */
+  --tw-prose-headings: #f8fafc;    /* Slate-50 */
+  --tw-prose-links: #a78bfa;       /* Violet-400 */
+  --tw-prose-quotes: #94a3b8;      /* Slate-400 */
+  --tw-prose-code: #e879f9;        /* Fuchsia-400 */
+  --tw-prose-pre-bg: #0f172a;      /* Slate-900 */
 }
 
-/* 下面的样式保持不变 */
-.sidebar {
-  overflow: hidden;
-  min-width: 4rem;
-  transition: width 200ms ease;
-  will-change: width;
-}
-
-@media (min-width: 768px) {
-  .with-sidebar {
-    margin-left: var(--sidebar-width);
-    transition: margin-left 200ms ease;
-  }
-}
-
+/* 全局样式微调 */
 body {
   background: var(--background);
   color: var(--foreground);
@@ -65,71 +51,53 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 排版样式覆盖 */
+/* 选中文字的颜色（点睛之笔） */
+::selection {
+  background-color: #a78bfa; /* Violet-400 */
+  color: #fff;
+}
+
+/* 侧边栏动画 */
+.sidebar {
+  overflow: hidden;
+  min-width: 4rem;
+  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1); /* 更平滑的动画曲线 */
+  will-change: width;
+  border-right: 1px solid rgba(0,0,0,0.05); /* 超细边框 */
+}
+.dark .sidebar {
+  border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+@media (min-width: 768px) {
+  .with-sidebar {
+    margin-left: var(--sidebar-width);
+    transition: margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* --- 排版美化 (Prose) --- */
 .prose a {
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
+  font-weight: 600;
+  transition: all 0.2s;
+  border-bottom: 1px solid transparent;
 }
 .prose a:hover {
-  text-decoration: underline;
+  color: #8b5cf6; /* Violet-500 */
+  border-bottom-color: #8b5cf6;
+}
+
+.prose img {
+  border-radius: 0.75rem; /* 圆角更大 */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .prose blockquote {
   font-style: normal;
-  font-family: var(--font-serif);
   border-left-width: 4px;
-  border-left-color: var(--tw-prose-links);
-  background-color: rgba(243, 244, 246, 0.5);
+  border-left-color: #8b5cf6; /* 紫色竖线 */
+  background: linear-gradient(to right, rgba(139, 92, 246, 0.1), transparent); /* 渐变背景 */
   padding: 1rem 1.5rem;
-  border-radius: 0 0.5rem 0.5rem 0;
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-/* 暗黑模式下的引用块背景 */
-.dark .prose blockquote {
-  background-color: rgba(31, 41, 55, 0.5);
-}
-
-.prose code::before { content: "" !important; }
-.prose code::after { content: "" !important; }
-
-.prose code {
-  background-color: rgba(229, 231, 235, 0.5);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  font-weight: 500;
-  font-family: var(--font-mono);
-}
-/* 暗黑模式下的代码背景 */
-.dark .prose code {
-  background-color: rgba(55, 65, 81, 0.5);
-}
-
-.prose pre {
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.prose img {
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.prose h2 {
-  margin-top: 2.5em;
-  margin-bottom: 1em;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 0.5rem;
-}
-/* 暗黑模式下的标题分割线 */
-.dark .prose h2 {
-  border-color: #374151;
-}
-.prose h3 {
-  margin-top: 2em;
 }

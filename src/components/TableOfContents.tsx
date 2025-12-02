@@ -62,7 +62,7 @@ export default function TableOfContents() {
               }}
               className={`block pl-4 py-1 border-l-2 -ml-[1px] transition-colors duration-200 ${
                 activeId === heading.id
-                  ? 'border-blue-600 text-blue-600 font-medium'
+                  ? 'border-violet-600 text-violet-600 font-medium'
                   : 'border-transparent text-gray-500 hover:text-gray-900 dark:hover:text-gray-300'
               }`}
             >

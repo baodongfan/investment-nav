@@ -10,7 +10,7 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-20">
+      <section className="bg-gradient-to-r from-violet-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-20">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white mb-4">
             🚀 投资导航
@@ -24,7 +24,7 @@ export default function Home() {
           <div className="flex justify-center gap-4">
             <Link
               href="/tools"
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+              className="px-8 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-semibold"
             >
               开始使用工具
             </Link>
@@ -37,19 +37,19 @@ export default function Home() {
           </div>
           <div className="flex justify-center gap-12 mt-12 text-center">
             <div>
-              <div className="text-3xl font-bold text-blue-600">7+</div>
+              <div className="text-3xl font-bold text-violet-600">7+</div>
               <p className="text-gray-600 dark:text-gray-400">投资工具</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-blue-600">10+</div>
+              <div className="text-3xl font-bold text-violet-600">10+</div>
               <p className="text-gray-600 dark:text-gray-400">教程分类</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-blue-600">30+</div>
+              <div className="text-3xl font-bold text-violet-600">30+</div>
               <p className="text-gray-600 dark:text-gray-400">精选网站</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-blue-600">100%</div>
+              <div className="text-3xl font-bold text-violet-600">100%</div>
               <p className="text-gray-600 dark:text-gray-400">免费使用</p>
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function Home() {
                 key={tutorial.id}
                 className="p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition"
               >
-                <span className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold mb-3">
+                <span className="inline-block px-3 py-1 bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 rounded-full text-sm font-semibold mb-3">
                   {tutorial.category}
                 </span>
                 <h3 className="text-lg font-bold text-black dark:text-white mb-2">
@@ -162,7 +162,7 @@ export default function Home() {
           </div>
           <Link
             href="/tutorials"
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+            className="inline-block px-6 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-semibold"
           >
             浏览全部教程
           </Link>
@@ -205,7 +205,7 @@ export default function Home() {
           </div>
           <Link
             href="/tools"
-            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
+            className="inline-block px-6 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-semibold"
           >
             查看全部工具
           </Link>
@@ -267,24 +267,24 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-blue-600 to-indigo-600">
+      <section className="py-20 px-4 bg-gradient-to-r from-violet-600 to-indigo-600">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-8">
             准备开始投资之旅了吗？
           </h2>
-          <p className="text-xl text-blue-100 mb-12">
+          <p className="text-xl text-violet-100 mb-12">
             加入数万美股/加密货币投资者大家庭，实现财富自由！
           </p>
           <div className="flex justify-center gap-4 flex-wrap">
             <Link
               href="/tools"
-              className="px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-100 transition font-semibold"
+              className="px-8 py-3 bg-white text-violet-600 rounded-lg hover:bg-gray-100 transition font-semibold"
             >
               立即开始使用
             </Link>
             <Link
               href="/websites"
-              className="px-8 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold"
+              className="px-8 py-3 bg-violet-700 text-white rounded-lg hover:bg-violet-800 transition font-semibold"
             >
               浏览投资网站
             </Link>

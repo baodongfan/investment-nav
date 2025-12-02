@@ -26,7 +26,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center mb-20">
             {/* Author Info */}
             <div className="text-center">
-              <div className="w-32 h-32 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 mx-auto mb-6 flex items-center justify-center">
+              <div className="w-32 h-32 rounded-full bg-gradient-to-r from-violet-400 to-purple-500 mx-auto mb-6 flex items-center justify-center">
                 <span className="text-5xl">🚀</span>
               </div>
               <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
@@ -37,9 +37,9 @@ export default function About() {
               </p>
               {/*这里是左边作者社交媒体链接的占位符
               <div className="flex justify-center gap-4">
-                <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold">X/Twitter</a>
-                <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold">YouTube</a>
-                <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold">Telegram</a>
+                <a href="#" className="text-violet-600 hover:text-violet-700 font-semibold">X/Twitter</a>
+                <a href="#" className="text-violet-600 hover:text-violet-700 font-semibold">YouTube</a>
+                <a href="#" className="text-violet-600 hover:text-violet-700 font-semibold">Telegram</a>
               </div>
               */}
             </div>
@@ -67,7 +67,7 @@ export default function About() {
               核心价值观
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div className="p-6 bg-blue-50 dark:bg-blue-900 rounded-lg">
+              <div className="p-6 bg-violet-50 dark:bg-violet-900 rounded-lg">
                 <div className="text-4xl mb-4">💎</div>
                 <h4 className="text-xl font-bold text-black dark:text-white mb-2">
                   质量优先
@@ -182,14 +182,14 @@ export default function About() {
               如果你有任何建议、反馈或想要贡献内容，欢迎联系我们。我们非常重视用户的意见，并会不断改进这个平台。
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="#" className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
+              <a href="#" className="px-6 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-semibold">
                 发送邮件
               </a>
-              <a href="#" className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
+              <a href="#" className="px-6 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-semibold">
                 Telegram社区建设中。。
               </a>
               {/*
-              <a href="#" className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
+              <a href="#" className="px-6 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-semibold">
                 关注X/Twitter。。
               </a>
               */}
@@ -199,7 +199,7 @@ export default function About() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-16 px-4 bg-gradient-to-r from-violet-600 to-purple-600">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-white mb-6">
             准备好开始你的投资之旅了吗？
@@ -207,13 +207,13 @@ export default function About() {
           <div className="flex justify-center gap-4 flex-wrap">
             <Link
               href="/"
-              className="px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-100 transition font-semibold"
+              className="px-8 py-3 bg-white text-violet-600 rounded-lg hover:bg-gray-100 transition font-semibold"
             >
               回到首页
             </Link>
             <Link
               href="/tools"
-              className="px-8 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold"
+              className="px-8 py-3 bg-violet-700 text-white rounded-lg hover:bg-violet-800 transition font-semibold"
             >
               使用投资工具
             </Link>

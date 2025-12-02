@@ -25,7 +25,7 @@ export default function Websites() {
       <Navigation />
 
       {/* Header Section */}
-      <section className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-16">
+      <section className="bg-gradient-to-r from-violet-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-16">
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
             🌐 投资网站聚合
@@ -49,7 +49,7 @@ export default function Websites() {
                 onClick={() => setSelectedCategory('')}
                 className={`px-4 py-2 rounded-lg font-semibold transition ${
                   selectedCategory === ''
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-violet-600 text-white'
                     : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600'
                 }`}
               >
@@ -63,7 +63,7 @@ export default function Websites() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-4 py-2 rounded-lg font-semibold transition ${
                       selectedCategory === category
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-violet-600 text-white'
                         : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600'
                     }`}
                   >
@@ -82,7 +82,7 @@ export default function Websites() {
                 href={website.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition hover:border-blue-400 dark:hover:border-blue-500 group flex flex-col"
+                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition hover:border-violet-400 dark:hover:border-violet-500 group flex flex-col"
               >
                 {/* Card Header with Icon */}
                 <div className="flex items-center gap-4 mb-4">
@@ -106,7 +106,7 @@ export default function Websites() {
                       <h3 className="text-lg font-bold text-black dark:text-white truncate pr-2">
                         {website.name}
                       </h3>
-                      <span className="text-gray-400 group-hover:text-blue-500 transition-colors flex-shrink-0">
+                      <span className="text-gray-400 group-hover:text-violet-500 transition-colors flex-shrink-0">
                         ↗
                       </span>
                     </div>
@@ -118,7 +118,7 @@ export default function Websites() {
                 </p>
                 
                 <div className="mt-auto">
-                  <span className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-semibold">
+                  <span className="inline-block px-3 py-1 bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 rounded-full text-xs font-semibold">
                     {website.category}
                   </span>
                 </div>
@@ -139,7 +139,7 @@ export default function Websites() {
       {/* Footer */}
       <footer className="bg-gray-50 dark:bg-gray-900 py-12 px-4 border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-6xl mx-auto text-center text-gray-600 dark:text-gray-400">
-          <p>找到你需要的投资网站了吗？<Link href="/tutorials" className="text-blue-600 hover:text-blue-700 font-semibold">查看投资教程 →</Link></p>
+          <p>找到你需要的投资网站了吗？<Link href="/tutorials" className="text-violet-600 hover:text-violet-700 font-semibold">查看投资教程 →</Link></p>
         </div>
       </footer>
     </div>

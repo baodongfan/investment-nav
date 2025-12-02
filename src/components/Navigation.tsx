@@ -8,7 +8,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
-  // theme init (can stay useEffect)
+  // theme init
   useEffect(() => {
     try {
       const saved = localStorage.getItem('theme');
@@ -33,7 +33,7 @@ export default function Navigation() {
     }
   }, [isDarkMode]);
 
-  // Use useLayoutEffect so --sidebar-width is set before paint (prevents first-click flicker)
+  // Sidebar width handling
   useLayoutEffect(() => {
     const root = document.documentElement;
     root.style.setProperty('--sidebar-width', isOpen ? '16rem' : '4rem');
@@ -41,7 +41,6 @@ export default function Navigation() {
     else root.classList.remove('sidebar-open');
   }, [isOpen]);
 
-  // ensure initial value before first paint as well
   useLayoutEffect(() => {
     document.documentElement.style.setProperty('--sidebar-width', isOpen ? '16rem' : '4rem');
   }, []);
@@ -61,10 +60,10 @@ export default function Navigation() {
 
   return (
     <>
-      {/* Mobile top bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-3 py-2">
+      {/* Mobile top bar - 增加了毛玻璃效果和 Slate-950 背景 */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-3 py-2 transition-colors duration-300">
         <div className="flex items-center gap-2">
-          <button aria-label="Open menu" onClick={toggleMobile} className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900">
+          <button aria-label="Open menu" onClick={toggleMobile} className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
             ☰
           </button>
           <Link href="/" className="flex items-center gap-2 font-bold text-lg">
@@ -74,28 +73,27 @@ export default function Navigation() {
         </div>
 
         <div className="flex items-center gap-2">
-          <button onClick={toggleTheme} className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-lg transition" aria-label="切换主题">
+          <button onClick={toggleTheme} className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" aria-label="切换主题">
             {isDarkMode ? '☀️' : '🌙'}
           </button>
         </div>
       </div>
 
-      {/* Sidebar: width driven by CSS var for smooth, sync behavior */}
+      {/* Sidebar - 增加了毛玻璃效果和 Slate-950 背景 */}
       <aside
         className={`
-          sidebar   /* <-- new helper class */
+          sidebar
           fixed top-0 left-0 h-full z-50
-          bg-white dark:bg-black border-r border-gray-200 dark:border-gray-800
+          bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl 
+          border-r border-gray-200 dark:border-gray-800
           hidden md:block
+          transition-colors duration-300
         `}
-        style={{ width: 'var(--sidebar-width)' }} // use CSS var for both layout and this element
+        style={{ width: 'var(--sidebar-width)' }}
         aria-expanded={isOpen}
       >
         <div className="h-full flex flex-col">
-          {/* Header area:
-              - when open: show title + theme + collapse button
-              - when closed: show a single "open" button (no rocket)
-          */}
+          {/* Header area */}
           <div className="flex items-center justify-between px-3 py-3">
             {isOpen ? (
               <Link href="/" className="flex items-center gap-2 font-bold text-lg">
@@ -103,37 +101,36 @@ export default function Navigation() {
                 <span className="text-black dark:text-white">投资导航</span>
               </Link>
             ) : (
-              // when collapsed only show open button on the left (so it doesn't overlap content)
               <button
                 onClick={toggleSidebar}
                 aria-label="打开侧边栏"
-                className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900"
+                className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 ➡️
               </button>
             )}
 
-            {/* right controls: only visible when open */}
             {isOpen ? (
               <div className="flex items-center gap-2">
-                <button onClick={toggleTheme} className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-lg transition" aria-label="切换主题">
+                <button onClick={toggleTheme} className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" aria-label="切换主题">
                   {isDarkMode ? '☀️' : '🌙'}
                 </button>
 
-                <button onClick={toggleSidebar} className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-lg transition" aria-label="收起侧边栏">
+                <button onClick={toggleSidebar} className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" aria-label="收起侧边栏">
                   ⬅️
                 </button>
               </div>
             ) : null}
           </div>
 
+          {/* Navigation Items */}
           <nav className="flex-1 overflow-auto">
             <ul className="py-2">
               {items.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className={`flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 transition ${isOpen ? '' : 'justify-center'}`}
+                    className={`flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors ${isOpen ? '' : 'justify-center'}`}
                     title={item.label}
                   >
                     <span className="text-xl">{item.icon}</span>
@@ -144,26 +141,27 @@ export default function Navigation() {
             </ul>
           </nav>
 
-          <div className="px-4 py-4 border-t border-gray-100 dark:border-gray-900">
+          {/* Footer Text */}
+          <div className="px-4 py-4 border-t border-gray-100 dark:border-gray-800">
             {isOpen ? <p className="text-sm text-gray-500 dark:text-gray-400">专为美股&加密货币投资而生</p> : <div className="text-center text-xs text-gray-500 dark:text-gray-400">投资</div>}
           </div>
         </div>
       </aside>
 
-      {/* Mobile overlay sidebar (unchanged) */}
+      {/* Mobile overlay sidebar */}
       <div className={`md:hidden fixed inset-0 z-50 flex ${mobileOpen ? 'pointer-events-auto' : 'pointer-events-none'}`} aria-hidden={!mobileOpen}>
-        <div className={`fixed inset-0 bg-black bg-opacity-40 transition-opacity ${mobileOpen ? 'opacity-100' : 'opacity-0'}`} onClick={toggleMobile} />
-        <div className={`relative bg-white dark:bg-black w-72 max-w-full h-full transform transition-transform ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity ${mobileOpen ? 'opacity-100' : 'opacity-0'}`} onClick={toggleMobile} />
+        <div className={`relative bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl w-72 max-w-full h-full transform transition-transform ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200 dark:border-gray-800">
             <Link href="/" className="flex items-center gap-2 font-bold text-lg">
               <span className="text-2xl">🚀</span>
               <span className="text-black dark:text-white">投资导航</span>
             </Link>
             <div className="flex items-center gap-2">
-              <button onClick={toggleTheme} className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-lg transition">
+              <button onClick={toggleTheme} className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
                 {isDarkMode ? '☀️' : '🌙'}
               </button>
-              <button onClick={toggleMobile} className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900">✕</button>
+              <button onClick={toggleMobile} className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">✕</button>
             </div>
           </div>
 
@@ -171,7 +169,7 @@ export default function Navigation() {
             <ul className="py-2">
               {items.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 transition">
+                  <Link href={item.href} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors">
                     <span className="text-xl">{item.icon}</span>
                     <span className="font-medium">{item.label}</span>
                   </Link>
