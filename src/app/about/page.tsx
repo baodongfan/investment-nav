@@ -103,7 +103,7 @@ export default function About() {
                   完全免费
                 </h4>
                 <p className="text-gray-600 dark:text-gray-400">
-                  永远不收费，永远不卖广告
+                  永远不收费，其实是我不懂如何变现
                 </p>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function About() {
       <footer className="bg-black dark:bg-gray-950 text-white py-12 px-4">
         <div className="max-w-6xl mx-auto text-center text-gray-400">
           <p>&copy; 2025 投资导航. 由行者Brandon整理打造.</p>
-          <p className="mt-2">完全免费，不包含任何商业变现</p>
+          <p className="mt-2">完全免费，共享学习</p>
         </div>
       </footer>
     </div>

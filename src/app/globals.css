@@ -1,34 +1,53 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --sidebar-width: 16rem; /* default */
+  --sidebar-width: 16rem;
+  
+  /* 定义排版基础颜色 */
+  --tw-prose-body: #374151;        /* 正文深灰，不刺眼 */
+  --tw-prose-headings: #111827;    /* 标题近黑 */
+  --tw-prose-links: #2563eb;       /* 链接蓝 */
+  --tw-prose-quotes: #4b5563;      /* 引用灰 */
+  --tw-prose-code: #ea580c;        /* 行内代码橙色 */
+  --tw-prose-pre-bg: #1e293b;      /* 代码块背景深蓝灰 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  
+  /* 优化后的字体栈，优先显示优质中文字体 */
+  --font-sans: "Inter", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-serif: "Noto Serif SC", "Songti SC", "SimSun", "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
+    /* 暗黑模式下的排版颜色 */
+    --tw-prose-body: #d1d5db;
+    --tw-prose-headings: #f3f4f6;
+    --tw-prose-links: #60a5fa;
+    --tw-prose-quotes: #9ca3af;
+    --tw-prose-code: #fb923c;
+    --tw-prose-pre-bg: #111827;
   }
 }
 
-/* ensure sidebar clips children and animates width (no visual leak) */
+/* 侧边栏动画 */
 .sidebar {
   overflow: hidden;
-  min-width: 4rem;           /* collapsed minimum */
+  min-width: 4rem;
   transition: width 200ms ease;
   will-change: width;
 }
 
-/* Desktop: push main by sidebar width */
 @media (min-width: 768px) {
   .with-sidebar {
     margin-left: var(--sidebar-width);
@@ -39,5 +58,80 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans); /* 默认应用优化后的无衬线字体 */
+  -webkit-font-smoothing: antialiased; /* 让字体在 Mac 上更清晰 */
+}
+
+/* --- 核心排版样式覆盖 (复刻博客风格) --- */
+
+/* 1. 链接样式优化：默认无下划线，悬停有下划线 */
+.prose a {
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.prose a:hover {
+  text-decoration: underline;
+}
+
+/* 2. 引用块优化：左侧竖线+背景色+衬线体 */
+.prose blockquote {
+  font-style: normal; /* 取消默认斜体 */
+  font-family: var(--font-serif); /* 使用衬线体，更有质感 */
+  border-left-width: 4px;
+  border-left-color: var(--tw-prose-links); /* 使用链接色作为强调色 */
+  background-color: rgba(243, 244, 246, 0.5); /* 浅灰背景 */
+  padding: 1rem 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.dark .prose blockquote {
+  background-color: rgba(31, 41, 55, 0.5); /* 暗黑模式背景 */
+}
+
+/* 3. 去除行内代码的反引号 (`) */
+.prose code::before { content: "" !important; }
+.prose code::after { content: "" !important; }
+
+/* 4. 行内代码样式：加背景、圆角 */
+.prose code {
+  background-color: rgba(229, 231, 235, 0.5);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  font-family: var(--font-mono);
+}
+.dark .prose code {
+  background-color: rgba(55, 65, 81, 0.5);
+}
+
+/* 5. 代码块 (pre) 样式 */
+.prose pre {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* 6. 图片优化：圆角+阴影 */
+.prose img {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* 7. 标题间距优化 */
+.prose h2 {
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #e5e7eb; /* 标题下加一条淡线区分 */
+  padding-bottom: 0.5rem;
+}
+.dark .prose h2 {
+  border-color: #374151;
+}
+.prose h3 {
+  margin-top: 2em;
 }

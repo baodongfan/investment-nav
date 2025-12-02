@@ -21,6 +21,9 @@ export interface Article {
   description: string;
   category: string;
   url?: string;
+  content?: string;  // 新增：站内文章内容
+  date?: string;  // 新增：发布日期
+  author?: string; // 新增：作者
 }
 
 export interface Tool {
@@ -32,49 +35,24 @@ export interface Tool {
   isFree: boolean;
 }
 
+
+
+
 // 网站聚合数据
 export const websites: Website[] = [
   {
-    id: "interactive-brokers",
-    name: "Interactive Brokers",
-    description: "全球领先的投资平台，支持美股、期货、加密货币等",
-    url: "https://www.interactivebrokers.com",
-    category: "美股券商",
+    id: "ivolatility 周观",
+    name: "Ivolatility 周观",
+    description: "Ivolatility 每周市场分析与投资策略, 包含期权组合建议",
+    url: "https://www.ivolatility.com/news",
+    category: "市场分析",
   },
   {
-    id: "td-ameritrade",
-    name: "TD Ameritrade",
-    description: "美国主流券商，适合美股投资初学者",
-    url: "https://www.tdameritrade.com",
-    category: "美股券商",
-  },
-  {
-    id: "webull",
-    name: "Webull",
-    description: "零佣金美股交易平台，提供24小时交易",
-    url: "https://www.webull.com",
-    category: "美股券商",
-  },
-  {
-    id: "coinbase",
-    name: "Coinbase",
-    description: "美国最大的加密货币交易所",
-    url: "https://www.coinbase.com",
-    category: "加密货币交易所",
-  },
-  {
-    id: "kraken",
-    name: "Kraken",
-    description: "欧洲领先的加密货币交易所",
-    url: "https://www.kraken.com",
-    category: "加密货币交易所",
-  },
-  {
-    id: "binance",
-    name: "Binance",
-    description: "全球最大的加密货币交易所",
-    url: "https://www.binance.com",
-    category: "加密货币交易所",
+    id: "Daily Chartbook",
+    name: "Daily Chartbook",
+    description: "每天更新的市场图表和技术分析，免费也够用，付费可以看更多",
+    url: "https://www.dailychartbook.com/",
+    category: "市场分析",
   },
   {
     id: "investopedia",
@@ -86,7 +64,7 @@ export const websites: Website[] = [
   {
     id: "seeking-alpha",
     name: "Seeking Alpha",
-    description: "股票分析和投资观点平台",
+    description: "股票分析和投资观点平台，里面有众多专业投资者的深度分析文章",
     url: "https://seekingalpha.com",
     category: "投资分析",
   },
@@ -98,50 +76,17 @@ export const tutorials: Tutorial[] = [
     id: "us-stocks-guide",
     title: "美股投资教程",
     description: "美股指数基金、ETF、个股投资实战",
+    url: "https://www.investmentnav.com/us-stocks-guide",
     category: "美股投资",
   },
-  {
-    id: "overseas-banking",
-    title: "境外银行开户教程",
-    description: "境外银行开户教程分享，包含多个国家",
-    category: "银行开户",
-  },
-  {
-    id: "broker-account",
-    title: "美股券商开户入金教程",
-    description: "美股券商开户与入金合集教程分享",
-    category: "券商开户",
-  },
-  {
-    id: "hkd-withdrawal",
-    title: "港币出金教程",
-    description: "多种港币出金方式分享",
-    category: "出入金",
-  },
-  {
-    id: "crypto-tutorial",
-    title: "加密货币投资教程",
-    description: "比特币、以太坊等加密货币投资入门",
-    category: "加密货币",
-  },
-  {
-    id: "web3-airdrop",
-    title: "Web3空投教程",
-    description: "空投项目参与指南和风险防范",
-    category: "Web3",
-  },
+
   {
     id: "fund-investment",
     title: "基金投资教程",
     description: "公募基金、ETF基金投资策略",
     category: "基金投资",
   },
-  {
-    id: "tax-planning",
-    title: "美股税务规划",
-    description: "美股投资的税务优化和规划建议",
-    category: "税务",
-  },
+
 ];
 
 // 文章数据
@@ -150,6 +95,7 @@ export const articles: Article[] = [
     id: "article-1",
     title: "为什么美股值得投资",
     description: "分析美股市场的长期投资价值和优势",
+    url: "",
     category: "市场分析",
   },
   {
@@ -182,15 +128,17 @@ export const articles: Article[] = [
     description: "加密货币领域的常见骗局和防范措施",
     category: "风险管理",
   },
+  
 ];
 
 // 投资工具数据
 export const tools: Tool[] = [
   {
-    id: "fraud-test",
-    name: "推特/电报反诈测试",
-    description: "通过15道题目测试你的反诈意识，保护你的钱包",
-    features: ["15道题目测试", "实时反馈", "防诈骗指南"],
+    id: "finviz-screener",
+    name: "美股筛选器",
+    description: "自定义程度高，功能强大的美股筛选工具，根据多种条件筛选股票",
+    features: ["实时反馈", "多条件筛选"],
+    url: "https://finviz.com/screener.ashx",
     isFree: true,
   },
   {
