@@ -7,13 +7,11 @@ import type { ArticleData } from '@/lib/articles';
 export default function ArticleFilter({ articles }: { articles: ArticleData[] }) {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
-  // 提取所有分类并去重
   const categories = useMemo(() => {
     const cats = [...new Set(articles.map((a) => a.category))];
     return cats.sort();
   }, [articles]);
 
-  // 根据选择的分类筛选文章
   const filteredArticles = useMemo(() => {
     if (!selectedCategory) return articles;
     return articles.filter((a) => a.category === selectedCategory);
@@ -21,7 +19,6 @@ export default function ArticleFilter({ articles }: { articles: ArticleData[] })
 
   return (
     <div className="max-w-6xl mx-auto">
-      {/* 筛选按钮区域 */}
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-black dark:text-white mb-6">文章分类</h2>
         <div className="flex flex-wrap gap-3">
@@ -51,12 +48,12 @@ export default function ArticleFilter({ articles }: { articles: ArticleData[] })
         </div>
       </div>
 
-      {/* 文章卡片网格 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredArticles.map((article) => (
           <div
             key={article.id}
-            className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition hover:border-purple-400 dark:hover:border-purple-500 flex flex-col"
+            // 修改这里：增加 transition-all duration-300 hover:-translate-y-1
+            className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-purple-400 dark:hover:border-purple-500 flex flex-col"
           >
             <div className="flex items-start justify-between mb-3 flex-1">
               <div className="flex-1">

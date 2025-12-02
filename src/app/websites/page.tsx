@@ -8,13 +8,11 @@ import { useMemo, useState } from 'react';
 export default function Websites() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
-  // 获取所有分类
   const categories = useMemo(() => {
     const cats = [...new Set(websites.map((w) => w.category))];
     return cats.sort();
   }, []);
 
-  // 筛选网站
   const filteredWebsites = useMemo(() => {
     if (!selectedCategory) return websites;
     return websites.filter((w) => w.category === selectedCategory);
@@ -24,7 +22,6 @@ export default function Websites() {
     <div className="min-h-screen bg-white dark:bg-black">
       <Navigation />
 
-      {/* Header Section */}
       <section className="bg-gradient-to-r from-violet-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-16">
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
@@ -36,10 +33,8 @@ export default function Websites() {
         </div>
       </section>
 
-      {/* Content Section */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Filter Buttons */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
               按分类筛选
@@ -74,7 +69,6 @@ export default function Websites() {
             </div>
           </div>
 
-          {/* Websites Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredWebsites.map((website) => (
               <a
@@ -82,21 +76,19 @@ export default function Websites() {
                 href={website.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition hover:border-violet-400 dark:hover:border-violet-500 group flex flex-col"
+                // 父容器保持 group 类
+                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-violet-400 dark:hover:border-violet-500 group flex flex-col"
               >
-                {/* Card Header with Icon */}
                 <div className="flex items-center gap-4 mb-4">
                   <div className="flex-shrink-0">
-                    {/* 懒人技巧：自动获取 Favicon */}
-                    {/* 如果 website.icon 有值则使用自定义的，否则去 Google 获取 */}
+                    {/* 修改图标：悬浮放大 */}
                     <img
                       src={
                         website.icon ||
                         `https://www.google.com/s2/favicons?domain=${website.url}&sz=64`
                       }
                       alt={website.name}
-                      className="w-12 h-12 rounded-lg bg-gray-50 dark:bg-gray-800 p-1 object-contain border border-gray-100 dark:border-gray-700"
-                      // 增加 loading="lazy" 提升性能
+                      className="w-12 h-12 rounded-lg bg-gray-50 dark:bg-gray-800 p-1 object-contain border border-gray-100 dark:border-gray-700 transition-transform duration-300 group-hover:scale-110"
                       loading="lazy"
                     />
                   </div>
@@ -106,7 +98,8 @@ export default function Websites() {
                       <h3 className="text-lg font-bold text-black dark:text-white truncate pr-2">
                         {website.name}
                       </h3>
-                      <span className="text-gray-400 group-hover:text-violet-500 transition-colors flex-shrink-0">
+                      {/* 修改箭头：悬浮向右上飞 */}
+                      <span className="text-gray-400 group-hover:text-violet-500 transition-all duration-300 flex-shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1">
                         ↗
                       </span>
                     </div>
@@ -118,7 +111,8 @@ export default function Websites() {
                 </p>
                 
                 <div className="mt-auto">
-                  <span className="inline-block px-3 py-1 bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 rounded-full text-xs font-semibold">
+                  {/* 修改标签：悬浮背景变深 */}
+                  <span className="inline-block px-3 py-1 bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 rounded-full text-xs font-semibold transition-colors duration-300 group-hover:bg-violet-200 dark:group-hover:bg-violet-800">
                     {website.category}
                   </span>
                 </div>
@@ -136,7 +130,6 @@ export default function Websites() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-gray-50 dark:bg-gray-900 py-12 px-4 border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-6xl mx-auto text-center text-gray-600 dark:text-gray-400">
           <p>找到你需要的投资网站了吗？<Link href="/tutorials" className="text-violet-600 hover:text-violet-700 font-semibold">查看投资教程 →</Link></p>

@@ -22,7 +22,6 @@ export default function Tutorials() {
     <div className="min-h-screen bg-white dark:bg-black">
       <Navigation />
 
-      {/* Header Section */}
       <section className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800 py-16">
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
@@ -34,10 +33,8 @@ export default function Tutorials() {
         </div>
       </section>
 
-      {/* Content Section */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Filter Buttons */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
               教程分类
@@ -72,12 +69,12 @@ export default function Tutorials() {
             </div>
           </div>
 
-          {/* Tutorials List */}
           <div className="space-y-4">
             {filteredTutorials.map((tutorial) => (
               <div
                 key={tutorial.id}
-                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition hover:border-green-400 dark:hover:border-green-500"
+                // 修改这里：增加 transition-all duration-300 hover:-translate-y-1
+                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-green-400 dark:hover:border-green-500"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
@@ -118,7 +115,6 @@ export default function Tutorials() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
@@ -133,7 +129,6 @@ export default function Tutorials() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-white dark:bg-black py-12 px-4 border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-6xl mx-auto text-center text-gray-600 dark:text-gray-400">
           <p>这些教程对你有帮助吗？<Link href="/articles" className="text-green-600 hover:text-green-700 font-semibold">查看精选文章 →</Link></p>

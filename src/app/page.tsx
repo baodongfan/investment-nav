@@ -9,7 +9,7 @@ export default function Home() {
     <div className="min-h-screen bg-white dark:bg-black">
       <Navigation />
 
-      {/* Hero Section */}
+      {/* Hero Section 保持不变 */}
       <section className="bg-gradient-to-r from-violet-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-20">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white mb-4">
@@ -56,7 +56,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features Section - 修改五大核心功能卡片内部动画 */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center text-black dark:text-white mb-16">
@@ -66,9 +66,11 @@ export default function Home() {
             {/* Feature 1 */}
             <Link
               href="/websites"
-              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition cursor-pointer bg-white dark:bg-gray-900"
+              // 1. 添加 group 类
+              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-900 group"
             >
-              <div className="text-4xl mb-4">🌐</div>
+              {/* 2. 添加图标动画 */}
+              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">🌐</div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-2">
                 投资网站聚合
               </h3>
@@ -80,9 +82,9 @@ export default function Home() {
             {/* Feature 2 */}
             <Link
               href="/tutorials"
-              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition cursor-pointer bg-white dark:bg-gray-900"
+              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-900 group"
             >
-              <div className="text-4xl mb-4">📚</div>
+              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">📚</div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-2">
                 投资系统教程
               </h3>
@@ -94,9 +96,9 @@ export default function Home() {
             {/* Feature 3 */}
             <Link
               href="/articles"
-              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition cursor-pointer bg-white dark:bg-gray-900"
+              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-900 group"
             >
-              <div className="text-4xl mb-4">📄</div>
+              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">📄</div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-2">
                 投资精选文章
               </h3>
@@ -108,9 +110,9 @@ export default function Home() {
             {/* Feature 4 */}
             <Link
               href="/tools"
-              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition cursor-pointer bg-white dark:bg-gray-900"
+              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-900 group"
             >
-              <div className="text-4xl mb-4">🛠️</div>
+              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">🛠️</div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-2">
                 投资工具支持
               </h3>
@@ -120,8 +122,8 @@ export default function Home() {
             </Link>
 
             {/* Feature 5 */}
-            <div className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition bg-white dark:bg-gray-900">
-              <div className="text-4xl mb-4">🖼️</div>
+            <div className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-gray-900 group">
+              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">🖼️</div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-2">
                 一图看懂投资
               </h3>
@@ -133,7 +135,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tutorials Section */}
+      {/* Tutorials Section 保持不变 */}
       <section className="py-20 px-4 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-black dark:text-white mb-4">
@@ -146,7 +148,7 @@ export default function Home() {
             {tutorials.slice(0, 6).map((tutorial) => (
               <div
                 key={tutorial.id}
-                className="p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition"
+                className="p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <span className="inline-block px-3 py-1 bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 rounded-full text-sm font-semibold mb-3">
                   {tutorial.category}
@@ -169,7 +171,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tools Section */}
+      {/* Tools Section 保持不变 */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-black dark:text-white mb-4">
@@ -182,7 +184,7 @@ export default function Home() {
             {tools.slice(0, 3).map((tool) => (
               <div
                 key={tool.id}
-                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition"
+                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <h3 className="text-lg font-bold text-black dark:text-white mb-2">
                   {tool.name}
@@ -212,61 +214,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Choose Section */}
-      <section className="py-20 px-4 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-black dark:text-white mb-16">
-            为什么选择投资导航？
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Reason 1 */}
-            <div className="text-center">
-              <div className="text-4xl mb-4">💎</div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                资源优质
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                由投资专家精心设计与挑选
-              </p>
-            </div>
-
-            {/* Reason 2 */}
-            <div className="text-center">
-              <div className="text-4xl mb-4">⚡</div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                实时更新
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                每周实时更新最新投资资源
-              </p>
-            </div>
-
-            {/* Reason 3 */}
-            <div className="text-center">
-              <div className="text-4xl mb-4">🎓</div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                新手友好
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                切实地帮助每一位投资者入门
-              </p>
-            </div>
-
-            {/* Reason 4 */}
-            <div className="text-center">
-              <div className="text-4xl mb-4">🎁</div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                完全免费
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                建站初衷，完全免费使用
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
+      {/* CTA Section 保持不变 */}
       <section className="py-20 px-4 bg-gradient-to-r from-violet-600 to-indigo-600">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-8">
@@ -292,7 +240,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer 保持不变 */}
       <footer className="bg-black dark:bg-gray-950 text-white py-12 px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
