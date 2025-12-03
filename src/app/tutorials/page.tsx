@@ -4,135 +4,135 @@ import Link from 'next/link';
 import Navigation from '@/components/Navigation';
 import { tutorials } from '@/data/navigation';
 import { useMemo, useState } from 'react';
+import { BookOpen, ExternalLink } from 'lucide-react';
 
 export default function Tutorials() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('全部');
 
   const categories = useMemo(() => {
     const cats = [...new Set(tutorials.map((t) => t.category))];
-    return cats.sort();
+    return ['全部', ...cats.sort()];
   }, []);
 
   const filteredTutorials = useMemo(() => {
-    if (!selectedCategory) return tutorials;
+    if (selectedCategory === '全部') return tutorials;
     return tutorials.filter((t) => t.category === selectedCategory);
   }, [selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-[#F9FAFB] dark:bg-black font-sans">
       <Navigation />
 
-      <section className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800 py-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
-            📚 投资系统教程
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
+        <div className="mb-10">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-3">
+            投资系统教程
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            美股投资、加密货币投资、美股券商开户、境外银行开户、出入金资金流转、Web3空投，一站式教程汇总
+          <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl">
+            涵盖美股、加密货币、开户入金等全方位知识，助您建立完整的投资体系。
           </p>
         </div>
-      </section>
 
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
-              教程分类
-            </h2>
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => setSelectedCategory('')}
-                className={`px-4 py-2 rounded-lg font-semibold transition ${
-                  selectedCategory === ''
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600'
-                }`}
-              >
-                全部 ({tutorials.length})
-              </button>
-              {categories.map((category) => {
-                const count = tutorials.filter((t) => t.category === category).length;
-                return (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-lg font-semibold transition ${
-                      selectedCategory === category
-                        ? 'bg-green-600 text-white'
-                        : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600'
-                    }`}
-                  >
-                    {category} ({count})
-                  </button>
-                );
-              })}
+        <div className="bg-white dark:bg-gray-900 rounded-[2rem] border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+          
+          <div className="border-b border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm sticky top-0 z-10 px-6 py-4">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0 scroll-smooth">
+              <div className="flex p-1.5 bg-gray-100 dark:bg-gray-800/80 rounded-xl whitespace-nowrap">
+                {categories.map((category) => {
+                  const isSelected = selectedCategory === category;
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
+                      className={`
+                        relative px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ease-out
+                        ${isSelected 
+                          ? 'bg-white dark:bg-gray-700 text-black dark:text-white shadow-sm' 
+                          : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                        }
+                      `}
+                    >
+                      {category}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          <div className="space-y-4">
-            {filteredTutorials.map((tutorial) => (
-              <div
-                key={tutorial.id}
-                // 修改这里：增加 transition-all duration-300 hover:-translate-y-1
-                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-green-400 dark:hover:border-green-500"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                      {tutorial.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      {tutorial.description}
-                    </p>
+          <div className="p-6 md:p-8 bg-white dark:bg-gray-900 min-h-[500px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredTutorials.map((tutorial) => (
+                <div
+                  key={tutorial.id}
+                  // 修改点：添加 hover:shadow-xl hover:-translate-y-1 以及对应的边框高亮
+                  className="
+                    group relative flex flex-col p-6 h-full overflow-hidden
+                    rounded-2xl border border-gray-100 dark:border-gray-800
+                    bg-white dark:bg-gray-800/20
+                    transition-all duration-300 ease-in-out
+                    hover:shadow-xl hover:-translate-y-1
+                    hover:border-green-500/50 dark:hover:border-green-500/50
+                  "
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 flex-shrink-0 rounded-xl bg-green-50 dark:bg-green-900/30 border border-green-100 dark:border-green-800/50 p-2 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform duration-300">
+                        <BookOpen size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors line-clamp-1">
+                          {tutorial.title}
+                        </h3>
+                        <span className="text-xs text-gray-400 font-mono mt-0.5 block">
+                          Tutorial
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6 line-clamp-2 flex-grow">
+                    {tutorial.description}
+                  </p>
+
+                  <div className="flex items-center justify-between mt-auto">
+                    <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border border-green-100 dark:border-green-900/30">
+                      {tutorial.category}
+                    </span>
+                    
+                    {tutorial.url && (
+                      <a 
+                        href={tutorial.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="flex items-center gap-1 text-sm font-medium text-gray-400 group-hover:text-green-600 transition-colors"
+                      >
+                        查看 <ExternalLink size={14} />
+                      </a>
+                    )}
                   </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-semibold">
-                    {tutorial.category}
-                  </span>
-                  {tutorial.url && (
-                    <a
-                      href={tutorial.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-green-600 hover:text-green-700 font-semibold text-sm"
-                    >
-                      查看教程 →
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {filteredTutorials.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-600 dark:text-gray-400 text-lg">
-                暂无符合条件的教程
-              </p>
+              ))}
             </div>
-          )}
-        </div>
-      </section>
 
-      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-2xl font-bold text-black dark:text-white mb-6">
-            想要学到更多实用工具？
-          </h2>
-          <Link
-            href="/tools"
-            className="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold"
-          >
+            {filteredTutorials.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <div className="text-6xl mb-4">📚</div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">暂无相关教程</h3>
+                <p className="text-gray-500">敬请期待更多内容更新</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+
+      <footer className="max-w-7xl mx-auto py-12 px-6 text-center">
+        <p className="text-gray-500 text-sm">
+          想要学到更多实用工具？
+          <Link href="/tools" className="text-green-600 hover:underline ml-1 font-medium">
             查看投资工具 →
           </Link>
-        </div>
-      </section>
-
-      <footer className="bg-white dark:bg-black py-12 px-4 border-t border-gray-200 dark:border-gray-800">
-        <div className="max-w-6xl mx-auto text-center text-gray-600 dark:text-gray-400">
-          <p>这些教程对你有帮助吗？<Link href="/articles" className="text-green-600 hover:text-green-700 font-semibold">查看精选文章 →</Link></p>
-        </div>
+        </p>
       </footer>
     </div>
   );
