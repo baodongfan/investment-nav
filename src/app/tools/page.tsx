@@ -4,7 +4,9 @@ import { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import DCACalculator from '@/components/tools/DCACalculator';
 import FIRECalculator from '@/components/tools/FIRECalculator';
+import DCFCalculator from '@/components/tools/DCFCalculator'; // 1. 引入新组件
 
+// 2. 更新工具列表
 const toolsList = [
   {
     id: 'dca',
@@ -19,6 +21,13 @@ const toolsList = [
     icon: '🔥',
     description: '基于4%法则，计算你需要多少资金才能实现财富自由，以及需要积累的时间。',
     active: true,
+  },
+  {
+    id: 'dcf', // 新增的 DCF 工具
+    name: 'DCF 现金流估值模型',
+    icon: '💰',
+    description: '基于未来现金流折现法计算股票的内在价值，华尔街最常用的估值模型。',
+    active: true, // 设为 true 启用
   },
   {
     id: 'screener',
@@ -39,13 +48,14 @@ const toolsList = [
 export default function ToolsPage() {
   const [activeToolId, setActiveToolId] = useState<string | null>(null);
 
-  // 渲染当前激活的工具组件
   const renderActiveTool = () => {
     switch (activeToolId) {
         case 'dca':
             return <DCACalculator onBack={() => setActiveToolId(null)} />;
         case 'fire':
             return <FIRECalculator onBack={() => setActiveToolId(null)} />;
+        case 'dcf': // 3. 添加渲染逻辑
+            return <DCFCalculator onBack={() => setActiveToolId(null)} />;
         default:
             return null;
     }
