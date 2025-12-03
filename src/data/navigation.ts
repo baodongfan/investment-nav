@@ -98,6 +98,20 @@ export const websites: Website[] = [
     url: "https://seekingalpha.com",
     category: "投资分析",
   },
+  {
+    id: "us-treasury-yield-curve",
+    name: "US Treasury Yield Curve",
+    description: "美国国债收益率曲线，反映不同期限国债的收益率变化 & 经济指标之间的关系",
+    url: "https://www.ustreasuryyieldcurve.com/charts/treasuries-time-series",
+    category: "数据&分析",
+  },
+  {
+    id: "macromicro-us",
+    name: "财经M 平方",
+    description: "Macromicro 提供的美国宏观经济数据和分析工具，涵盖GDP、就业、通胀等多方面数据",
+    url: "https://sc.macromicro.me/collections/51/us-treasury-bond/763/mm-us-bond-index",
+    category: "数据&分析",
+  },
 ];
 
 // 教程数据
