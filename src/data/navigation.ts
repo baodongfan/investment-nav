@@ -56,6 +56,20 @@ export const websites: Website[] = [
     category: "投资分析",
   },
   {
+    id: "StockInvestUs",
+    name: "StockInvestUs",
+    description: "股票投资分析平台，提供详尽的股票数据、财务报表分析和估值模型，提供股票预测和AI分析",
+    url: "https://stockinvest.us/",
+    category: "投资分析",
+  },
+  {
+    id: "TipRanks",
+    name: "TipRanks",
+    description: "投资研究平台，汇集分析师评级、市场情绪数据和分析师文章，帮助投资者做出明智决策（这个我花了会员，会经常看）",
+    url: "https://www.tipranks.com/dashboard",
+    category: "投资分析",
+  },
+  {
     id: "ETF Database",
     name: "ETF Database",
     description: "ETF 数据库，提供全面的ETF信息和筛选工具",
