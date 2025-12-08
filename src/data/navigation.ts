@@ -141,17 +141,17 @@ export const websites: Website[] = [
     category: "市场&数据",
   },
   {
+    id: "optionstrat",
+    name: "OptionStrat",
+    description: "提供期权策略盈亏计算和图表工具，帮助投资者可视化不同期权组合的潜在收益和风险",
+    url: "https://optionstrat.com/build/long-put",
+    category: "期权工具",
+  },
+  {
     id: "optionistics",
     name: "Optionistics",
     description: "期权数据和分析工具，提供期权链、波动率、策略分析以及期权定价模型",
     url: "https://www.optionistics.com/",
-    category: "期权工具",
-  },
-  {
-    id: "optionstrat",
-    name: "期权策略盈亏计算图",
-    description: "提供期权策略盈亏计算和图表工具，帮助投资者可视化不同期权组合的潜在收益和风险",
-    url: "https://optionstrat.com/build/long-put",
     category: "期权工具",
   },
   {
