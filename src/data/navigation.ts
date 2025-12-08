@@ -84,11 +84,18 @@ export const websites: Website[] = [
     category: "ETF投资",
   },
   {
+    id: "etfreplay",
+    name: "ETF Replay",
+    description: "ETF 回测和分析工具，帮助投资者评估ETF的历史表现和风险",
+    url: "https://www.etfreplay.com/",
+    category: "ETF投资",
+  },
+  {
     id: "finviz-screener",
     name: "Finviz Screener",
     description: "强大的美股筛选工具，根据多种条件筛选股票，网站还有丰富的市场新闻和分析及热力图",
     url: "https://finviz.com/screener.ashx",
-    category: "美股投资",
+    category: "市场&数据",
   },
   
   {
@@ -96,7 +103,7 @@ export const websites: Website[] = [
     name: "Investopedia",
     description: "投资教育和金融知识平台",
     url: "https://www.investopedia.com",
-    category: "投资教育",
+    category: "市场&数据",
   },
   {
     id: "Stock Analysis",
@@ -117,32 +124,40 @@ export const websites: Website[] = [
     name: "US Treasury Yield Curve",
     description: "美国国债收益率曲线，反映不同期限国债的收益率变化 & 经济指标之间的关系",
     url: "https://www.ustreasuryyieldcurve.com/charts/treasuries-time-series",
-    category: "数据&分析",
+    category: "市场&数据",
   },
   {
     id: "macromicro-us",
     name: "财经M 平方",
     description: "Macromicro 提供的美国宏观经济数据和分析工具，涵盖GDP、就业、通胀等多方面数据",
     url: "https://sc.macromicro.me/collections/51/us-treasury-bond/763/mm-us-bond-index",
-    category: "数据&分析",
+    category: "市场&数据",
+  },
+  {
+    id: "fear-and-greed-index",
+    name: "恐慌贪婪指数",
+    description: "CNN的恐惧与贪婪指数，反映市场情绪的指标",
+    url: "https://www.cnn.com/markets/fear-and-greed",
+    category: "市场&数据",
+  },
+    {
+    id: "optionistics",
+    name: "Optionistics",
+    description: "期权数据和分析工具，提供期权链、波动率、策略分析以及期权定价模型",
+    url: "https://www.optionistics.com/",
+    category: "期权工具",
   },
 ];
 
 // 教程数据
 export const tutorials: Tutorial[] = [
-  {
-    id: "us-stocks-guide",
-    title: "美股投资教程",
-    description: "美股指数基金、ETF、个股投资实战",
-    url: "https://www.investmentnav.com/us-stocks-guide",
-    category: "美股投资",
-  },
 
   {
-    id: "fund-investment",
-    title: "基金投资教程",
-    description: "公募基金、ETF基金投资策略",
-    category: "基金投资",
+    id: "tiger-college",
+    title: "老虎学堂",
+    description: "老虎证券官方投资教程，涵盖美股、港股、基金等多方面内容",
+    category: "港美股投资",
+    url: "https://www.laohu8.com/college",
   },
 
 ];
