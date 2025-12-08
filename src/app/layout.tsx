@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "../components/Navigation";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "投资导航 - 美股&加密货币投资导航平台",
