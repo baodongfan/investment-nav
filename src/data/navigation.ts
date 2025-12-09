@@ -179,41 +179,11 @@ export const tutorials: Tutorial[] = [
 // 文章数据
 export const articles: Article[] = [
   {
-    id: "article-1",
-    title: "为什么美股值得投资",
-    description: "分析美股市场的长期投资价值和优势",
-    url: "",
-    category: "市场分析",
-  },
-  {
-    id: "article-2",
-    title: "DCA定投策略深度解析",
-    description: "定期定额投资的科学性和实战指南",
-    category: "投资策略",
-  },
-  {
-    id: "article-3",
-    title: "比特币作为资产配置的价值",
-    description: "加密货币在投资组合中的角色",
-    category: "加密货币",
-  },
-  {
-    id: "article-4",
-    title: "FIRE财务自由运动指南",
-    description: "通过投资实现财务自由的方法论",
-    category: "财务规划",
-  },
-  {
-    id: "article-5",
-    title: "新手必读：股票估值方法",
-    description: "DCF估值、PE估值等基础知识",
-    category: "投资基础",
-  },
-  {
-    id: "article-6",
-    title: "如何识别和避免投资诈骗",
-    description: "加密货币领域的常见骗局和防范措施",
-    category: "风险管理",
+    id: "chuizhi_futu",
+    title: "4种垂直价差期权策略详解",
+    description: "垂直价差可以作为从基础期权策略进阶的桥梁",
+    url: "https://www.futunn.com/learn/detail-bullish-options-spread-in-a-bull-market-77651-230382091",
+    category: "期权策略",
   },
   
 ];
