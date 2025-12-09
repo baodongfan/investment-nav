@@ -1,10 +1,13 @@
+// src/app/articles/[id]/page.tsx
 import { getArticleData } from '@/lib/articles';
 import Navigation from '@/components/Navigation';
 import ReactMarkdown from 'react-markdown';
-import rehypeSlug from 'rehype-slug'; // 👈 引入插件
+import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm'; // 1. 引入表格支持插件
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import TableOfContents from '@/components/TableOfContents'; // 👈 引入目录组件
+import TableOfContents from '@/components/TableOfContents';
+import ZoomImage from '@/components/ZoomImage';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -22,18 +25,12 @@ export default async function ArticleDetail({ params }: PageProps) {
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-gray-200">
       <Navigation />
       
-      {/* 布局容器调整：
-        1. max-w-7xl: 增加总宽度以容纳目录
-        2. lg:grid lg:grid-cols-[1fr_240px]: 桌面端分两栏 (文章自适应 + 240px目录)
-        3. gap-10: 栏间距
-      */}
-      <div className="max-w-7xl mx-auto px-6 py-20 lg:grid lg:grid-cols-[1fr_240px] lg:gap-10 items-start">
+      <div className="max-w-7xl mx-auto px-6 py-12 lg:grid lg:grid-cols-[1fr_240px] lg:gap-10 items-start">
         
-        {/* 左侧：文章主体 */}
-        <article className="min-w-0"> {/* min-w-0 防止 flex/grid 子元素溢出 */}
+        <article className="min-w-0">
           
           {/* 面包屑 */}
-          <div className="mb-10 text-sm text-gray-500 font-medium tracking-wide">
+          <div className="mb-8 text-sm text-gray-500 font-medium tracking-wide">
             <Link 
               href="/articles" 
               className="hover:text-violet-600 transition-colors flex items-center gap-1"
@@ -43,49 +40,77 @@ export default async function ArticleDetail({ params }: PageProps) {
           </div>
 
           {/* 头部 */}
-          <header className="mb-16 border-b border-gray-100 dark:border-gray-800 pb-10">
-            <div className="flex gap-3 mb-6">
-              <span className="inline-block px-4 py-1.5 bg-violet-50 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full text-sm font-bold tracking-wide">
+          <header className="mb-10 border-b border-gray-100 dark:border-gray-800 pb-8">
+            <div className="flex gap-3 mb-4">
+              <span className="inline-block px-3 py-1 bg-violet-50 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full text-xs font-bold tracking-wide">
                 {article.category}
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-gray-900 dark:text-white">
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight text-gray-900 dark:text-white">
               {article.title}
             </h1>
             {article.date && (
-              <div className="text-gray-500 font-mono text-sm">
+              <div className="text-gray-500 font-mono text-xs">
                 发布于 {article.date}
               </div>
             )}
           </header>
 
-          {/* 正文：增加 rehypePlugins={[rehypeSlug]} */}
+          {/* 正文区域 */}
           <div className="
-            prose prose-lg prose-slate dark:prose-invert 
+            prose prose-slate dark:prose-invert 
             max-w-none 
+            
+            /* 基础排版优化 */
             prose-headings:font-bold 
-            prose-p:leading-loose 
-            prose-li:leading-loose
-            prose-headings:scroll-mt-24 /* 点击目录跳转时，标题上方留出空间，不被导航栏遮挡 */
+            prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg 
+            prose-headings:mt-8 prose-headings:mb-4
+            prose-headings:scroll-mt-24
+            
+            prose-p:leading-7 
+            prose-p:my-4      
+            
+            prose-li:leading-7
+            prose-li:my-1
+            
+            prose-img:rounded-xl
+            prose-img:shadow-md
+            prose-img:my-6
+
+            /* 表格样式优化 */
+            prose-table:border-collapse 
+            prose-table:border 
+            prose-table:border-gray-200 dark:prose-table:border-gray-800
+            prose-th:bg-gray-50 dark:prose-th:bg-gray-900
+            prose-th:p-3 prose-td:p-3
+            prose-th:border prose-td:border
+            prose-th:border-gray-200 dark:prose-th:border-gray-700
+            prose-td:border-gray-200 dark:prose-td:border-gray-700
           ">
-            <ReactMarkdown rehypePlugins={[rehypeSlug]}>
+            <ReactMarkdown 
+              remarkPlugins={[remarkGfm]} // 2. 在这里配置插件
+              rehypePlugins={[rehypeSlug]}
+              components={{
+                img: ({node, ...props}) => <ZoomImage {...props} />
+              }}
+            >
               {article.content}
             </ReactMarkdown>
           </div>
           
           {/* 底部 */}
-          <div className="mt-20 pt-10 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
+          <div className="mt-16 pt-8 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
              <p className="text-gray-400 text-sm">感谢阅读</p>
              <Link 
                href="/articles" 
-               className="text-violet-600 font-bold hover:text-violet-800 transition-colors flex items-center gap-1"
+               className="text-violet-600 font-bold hover:text-violet-800 transition-colors flex items-center gap-1 text-sm"
              >
                阅读更多文章 →
              </Link>
           </div>
         </article>
 
-        {/* 右侧：悬浮目录 (仅在 LG 尺寸显示) */}
+        {/* 右侧：悬浮目录 */}
         <aside className="hidden lg:block sticky top-24">
           <TableOfContents />
         </aside>
