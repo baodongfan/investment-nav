@@ -70,6 +70,13 @@ export const websites: Website[] = [
     category: "投资分析",
   },
   {
+    id: "etfreplay",
+    name: "ETF Replay",
+    description: "ETF 回测和分析工具，帮助投资者评估ETF的历史表现和风险",
+    url: "https://www.etfreplay.com/charts",
+    category: "ETF投资",
+  },
+  {
     id: "ETF Database",
     name: "ETF Database",
     description: "ETF 数据库，提供全面的ETF信息和筛选工具",
@@ -81,13 +88,6 @@ export const websites: Website[] = [
     name: "ETF Overlap Tool",
     description: "ETF 分析，重叠度查询工具，对比不同ETF的持仓重叠情况",
     url: "https://www.etfrc.com/funds/overlap.php",
-    category: "ETF投资",
-  },
-  {
-    id: "etfreplay",
-    name: "ETF Replay",
-    description: "ETF 回测和分析工具，帮助投资者评估ETF的历史表现和风险",
-    url: "https://www.etfreplay.com/",
     category: "ETF投资",
   },
   {
