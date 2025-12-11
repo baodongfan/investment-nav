@@ -87,14 +87,24 @@ export default function Websites() {
                     <div className="flex items-center gap-4">
                       {/* 图标容器 */}
                       <div className="w-12 h-12 flex-shrink-0 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                        {/* 替换原有的 img 标签内容 */}
                         <img
                           src={
-                            website.icon ||
-                            `https://www.google.com/s2/favicons?domain=${website.url}&sz=128`
+                            website.icon || 
+                            // 使用 DuckDuckGo (稳定性优先)
+                            `https://icons.duckduckgo.com/ip3/${new URL(website.url).hostname}.ico`
+                            
+                            // 或者使用 Unavatar (美观度优先)
+                            // `https://unavatar.io/${new URL(website.url).hostname}`
                           }
                           alt={website.name}
                           className="w-full h-full object-contain"
                           loading="lazy"
+                          // 添加一个简单的错误处理，如果图片挂了，显示一个默认的通用图标（可选）
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "/globe.svg"; // 确保 public 目录下有这个文件，或者用其他默认图
+                          }}
                         />
                       </div>
                       <div>
