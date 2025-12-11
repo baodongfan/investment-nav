@@ -90,20 +90,18 @@ export default function Websites() {
                         {/* 替换原有的 img 标签内容 */}
                         <img
                           src={
-                            website.icon || 
-                            // 使用 DuckDuckGo (稳定性优先)
-                            `https://icons.duckduckgo.com/ip3/${new URL(website.url).hostname}.ico`
-                            
-                            // 或者使用 Unavatar (美观度优先)
-                            // `https://unavatar.io/${new URL(website.url).hostname}`
+                            website.icon ||
+                            // 添加 fallback 参数，如果找不到图标则显示默认的 globe.svg
+                            // 添加 ttl 参数，设置缓存时间（例如 24小时）
+                            `https://unavatar.io/${new URL(website.url).hostname}?fallback=/globe.svg&ttl=1h`
                           }
                           alt={website.name}
                           className="w-full h-full object-contain"
                           loading="lazy"
-                          // 添加一个简单的错误处理，如果图片挂了，显示一个默认的通用图标（可选）
+                          // 建议保留这个 onError 作为最后的防线
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
-                            target.src = "/globe.svg"; // 确保 public 目录下有这个文件，或者用其他默认图
+                            target.src = "/globe.svg"; 
                           }}
                         />
                       </div>
