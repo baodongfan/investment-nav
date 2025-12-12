@@ -4,10 +4,15 @@ import { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import DCACalculator from '@/components/tools/DCACalculator';
 import FIRECalculator from '@/components/tools/FIRECalculator';
-import DCFCalculator from '@/components/tools/DCFCalculator'; // 1. 引入新组件
+import DCFCalculator from '@/components/tools/DCFCalculator';
+import MarketReview from '@/components/tools/MarketReview'; // 新增
+import MacroSimulator from '@/components/tools/MacroSimulator'; // 新增
+import EconomicData from '@/components/tools/EconomicData'; // 新增
+import MarketValuation from '@/components/tools/MarketValuation'; // 新增
+import SafetyMargin from '@/components/tools/SafetyMargin'; // 新增
 
-// 2. 更新工具列表
 const toolsList = [
+  // --- 原有工具 ---
   {
     id: 'dca',
     name: 'DCA 定投计算器',
@@ -23,25 +28,54 @@ const toolsList = [
     active: true,
   },
   {
-    id: 'dcf', // 新增的 DCF 工具
+    id: 'dcf',
     name: 'DCF 现金流估值模型',
     icon: '💰',
     description: '基于未来现金流折现法计算股票的内在价值，华尔街最常用的估值模型。',
-    active: true, // 设为 true 启用
+    active: true,
+  },
+  // --- 新增工具 ---
+  {
+    id: 'market-review',
+    name: '每日市场复盘',
+    icon: '🌍',
+    description: '美股、港股、A股每日行情综述，关键驱动因素解析，支持一键翻译。',
+    active: true,
   },
   {
-    id: 'screener',
-    name: '美股筛选器',
-    icon: '🔍',
-    description: '按照基本面和技术面指标筛选美股（建议使用 finviz）。',
-    active: false,
+    id: 'macro-sim',
+    name: '宏观情景推演',
+    icon: '🎲',
+    description: '输入降息、通胀等宏观参数，AI 推演各大类资产的潜在表现。',
+    active: true,
   },
   {
-    id: 'crypto',
-    name: '加密资产追踪',
-    icon: '🪙',
-    description: '实时追踪和分析你的加密投资组合。',
-    active: false,
+    id: 'econ-data',
+    name: '经济数据查询',
+    icon: '📊',
+    description: '查询失业率、通胀率、PMI等关键指标趋势，附带萨姆规则衰退预警。',
+    active: true,
+  },
+  {
+    id: 'market-valuation',
+    name: '市场估值温度计',
+    icon: '⚖️',
+    description: '查看标普500、恒生指数等主要股指当前估值在历史长河中的分位点。',
+    active: true,
+  },
+  {
+    id: 'safety-margin',
+    name: '个股安全边际评估',
+    icon: '🛡️',
+    description: '输入股价、EPS、ROE等参数，快速评估企业的投资安全边际与风险。',
+    active: true,
+  },
+  {
+    id: 'qa-bot',
+    name: 'AI 投资问答',
+    icon: '🤖',
+    description: '集成式投资问答系统，随时解答您的金融困惑。(开发中)',
+    active: false, // 暂时标记为开发中
   },
 ];
 
@@ -50,14 +84,16 @@ export default function ToolsPage() {
 
   const renderActiveTool = () => {
     switch (activeToolId) {
-        case 'dca':
-            return <DCACalculator onBack={() => setActiveToolId(null)} />;
-        case 'fire':
-            return <FIRECalculator onBack={() => setActiveToolId(null)} />;
-        case 'dcf': // 3. 添加渲染逻辑
-            return <DCFCalculator onBack={() => setActiveToolId(null)} />;
-        default:
-            return null;
+      case 'dca': return <DCACalculator onBack={() => setActiveToolId(null)} />;
+      case 'fire': return <FIRECalculator onBack={() => setActiveToolId(null)} />;
+      case 'dcf': return <DCFCalculator onBack={() => setActiveToolId(null)} />;
+      // 新增渲染逻辑
+      case 'market-review': return <MarketReview onBack={() => setActiveToolId(null)} />;
+      case 'macro-sim': return <MacroSimulator onBack={() => setActiveToolId(null)} />;
+      case 'econ-data': return <EconomicData onBack={() => setActiveToolId(null)} />;
+      case 'market-valuation': return <MarketValuation onBack={() => setActiveToolId(null)} />;
+      case 'safety-margin': return <SafetyMargin onBack={() => setActiveToolId(null)} />;
+      default: return null;
     }
   };
 
@@ -67,15 +103,13 @@ export default function ToolsPage() {
       
       <div className="py-24 px-4">
         {activeToolId ? (
-            // 显示具体的工具
             renderActiveTool()
         ) : (
-            // 显示工具列表
             <div className="max-w-6xl mx-auto">
                 <div className="mb-12 text-center">
-                    <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">实用投资工具</h1>
+                    <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">Micro Seal 金融工具箱</h1>
                     <p className="text-gray-600 dark:text-gray-400">
-                        工欲善其事，必先利其器。这些工具将辅助你做出更理性的投资决策。
+                        从宏观推演到个股估值，全方位辅助您的投资决策。
                     </p>
                 </div>
 
@@ -93,7 +127,7 @@ export default function ToolsPage() {
                         >
                             <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">{tool.icon}</div>
                             <h3 className="font-bold text-xl mb-3 text-black dark:text-white">{tool.name}</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6 h-12 line-clamp-2">
                                 {tool.description}
                             </p>
                             
