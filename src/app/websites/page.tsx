@@ -4,17 +4,16 @@ import Link from 'next/link';
 import Navigation from '@/components/Navigation';
 import { websites } from '@/data/navigation';
 import { useMemo, useState } from 'react';
+import WebsiteIcon from '@/components/WebsiteIcon'; // 1. 引入新组件
 
 export default function Websites() {
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
 
-  // 提取分类并去重，添加"全部"选项
   const categories = useMemo(() => {
     const cats = [...new Set(websites.map((w) => w.category))];
     return ['全部', ...cats.sort()];
   }, []);
 
-  // 筛选逻辑
   const filteredWebsites = useMemo(() => {
     if (selectedCategory === '全部') return websites;
     return websites.filter((w) => w.category === selectedCategory);
@@ -25,7 +24,6 @@ export default function Websites() {
       <Navigation />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
-      {/* 1. 简约头部：已更新标题和 Brandon 的个人署名 */}
         <div className="mb-10">
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-3">
             投资网站聚合
@@ -35,13 +33,10 @@ export default function Websites() {
           </p>
          </div>
 
-        {/* 2. 统一的大容器：模拟参考图的大边框效果 */}
         <div className="bg-white dark:bg-gray-900 rounded-[2rem] border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
           
-          {/* 3. 筛选栏区域：类似 Tab 分页器的设计 */}
           <div className="border-b border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm sticky top-0 z-10 px-6 py-4">
             <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0 scroll-smooth">
-              {/* 这里的 bg-gray-100 是整个 Tab 条的背景 */}
               <div className="flex p-1.5 bg-gray-100 dark:bg-gray-800/80 rounded-xl whitespace-nowrap">
                 {categories.map((category) => {
                   const isSelected = selectedCategory === category;
@@ -65,7 +60,6 @@ export default function Websites() {
             </div>
           </div>
 
-          {/* 4. 内容展示区域 */}
           <div className="p-6 md:p-8 bg-white dark:bg-gray-900 min-h-[500px]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
               {filteredWebsites.map((website) => (
@@ -86,48 +80,29 @@ export default function Websites() {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-4">
                       {/* 图标容器 */}
-                      <div className="w-12 h-12 flex-shrink-0 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                        {/* 替换原有的 img 标签内容 */}
-                        {/* 替换开始：更健壮的图标渲染逻辑 */}
-                        <img
-                          src={
-                            website.icon ||
-                            (() => {
-                              try {
-                                // 安全获取 hostname，防止 url 格式错误导致页面崩溃
-                                const hostname = new URL(website.url).hostname;
-                                // 移除 fallback 参数，因为 unavatar 无法访问你 localhost 的文件
-                                // 这里的 onError 会处理失败的情况
-                                return `https://unavatar.io/${hostname}?ttl=24h`;
-                              } catch (e) {
-                                return "/globe.svg"; // URL 解析失败直接用默认图标
-                              }
-                            })()
-                          }
-                          alt={website.name}
-                          className="w-full h-full object-contain"
-                          loading="lazy"
-                          onError={(e) => {
-                            // 图片加载失败时（unavatar 挂了或者找不到图标），回退到本地图标
-                            const target = e.target as HTMLImageElement;
-                            // 防止死循环：如果 globe.svg 也加载失败，就不再重试
-                            if (target.src.indexOf("/globe.svg") === -1) {
-                              target.src = "/globe.svg";
-                            }
-                          }}
+                      <div className="w-12 h-12 flex-shrink-0 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 overflow-hidden">
+                        
+                        {/* 2. 使用新封装的 WebsiteIcon 组件替代原有的 img */}
+                        <WebsiteIcon 
+                          website={website} 
+                          className="w-full h-full" 
                         />
+
                       </div>
                       <div>
                         <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
                           {website.name}
                         </h3>
                         <span className="text-xs text-gray-400 font-mono mt-0.5 block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          {new URL(website.url).hostname.replace('www.', '')}
+                          {(() => {
+                            try {
+                              return new URL(website.url).hostname.replace('www.', '');
+                            } catch { return ''; }
+                          })()}
                         </span>
                       </div>
                     </div>
                     
-                    {/* 右上角箭头 */}
                     <div className="w-8 h-8 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-400 group-hover:bg-violet-100 dark:group-hover:bg-violet-900/50 group-hover:text-violet-600 transition-all duration-300">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                         <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -144,10 +119,6 @@ export default function Websites() {
                     <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-900/30">
                       {website.category}
                     </span>
-                    {/* 这里可以根据数据添加额外标签，比如 '英文' */}
-                    {/* <span className="px-2.5 py-1 text-xs font-medium rounded-md bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">
-                      英文
-                    </span> */}
                   </div>
                 </a>
               ))}
@@ -164,7 +135,6 @@ export default function Websites() {
         </div>
       </main>
 
-      {/* 底部导航 */}
       <footer className="max-w-7xl mx-auto py-12 px-6 text-center">
         <p className="text-gray-500 text-sm">
           找不到想要的？

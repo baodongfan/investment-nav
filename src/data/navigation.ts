@@ -97,7 +97,6 @@ export const websites: Website[] = [
     url: "https://finviz.com/screener.ashx",
     category: "市场&数据",
   },
-  
   {
     id: "investopedia",
     name: "Investopedia",
