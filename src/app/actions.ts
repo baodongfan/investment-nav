@@ -1,123 +1,150 @@
 'use server';
 
-import yahooFinance from 'yahoo-finance2';
+// ----------------------------------------------------------------------
+// 配置区域
+// ----------------------------------------------------------------------
+const FMP_API_KEY = process.env.FMP_API_KEY;
+const BASE_URL = 'https://financialmodelingprep.com/api/v3';
 
-// ----------------------
-// 1. 获取每日市场复盘数据
-// ----------------------
+// ----------------------------------------------------------------------
+// 1. 获取每日市场复盘数据 (Market Review)
+// ----------------------------------------------------------------------
 export async function getRealMarketData() {
-  // 定义我们要关注的资产代码
-  const symbols = [
-    '^GSPC', // S&P 500
-    '^IXIC', // Nasdaq
-    '^TNX',  // 10年美债收益率
-    'GC=F',  // 黄金期货
-    'DX-Y.NYB', // 美元指数
-    '^HSI'   // 恒生指数
+  // FMP 的 Ticker 符号可能与 Yahoo 略有不同，这里定义映射关系
+  // 格式: [FMP代码, 显示名称, 是否是百分比数值]
+  const targetSymbols = [
+    { symbol: '^GSPC', name: '标普 500', isYield: false },
+    { symbol: '^IXIC', name: '纳斯达克', isYield: false },
+    { symbol: '^TNX',  name: '10年美债', isYield: true }, // 收益率
+    { symbol: 'GCUSD', name: '黄金',     isYield: false }, // FMP 黄金代码通常是 GCUSD
+    { symbol: '^DXY',  name: '美元指数', isYield: false }, // FMP 美元指数
+    { symbol: '^HSI',  name: '恒生指数', isYield: false }
   ];
 
+  // 拼接查询字符串，例如: ^GSPC,^IXIC,^TNX...
+  const symbolString = targetSymbols.map(i => i.symbol).join(',');
+
   try {
-    // ✅ 修复点 1：添加 'as any[]' 解决 TypeScript 构建时的 'map does not exist on type never' 报错
-    const results = await yahooFinance.quote(symbols) as any[];
-    
-    // 映射数据格式供前端使用
-    const assets = results.map(q => {
-      const price = q.regularMarketPrice || 0;
-      const changePercent = q.regularMarketChangePercent || 0;
+    // 使用 Next.js 的 fetch，设置 revalidate 缓存 60秒，避免频繁消耗 API 配额
+    const response = await fetch(
+      `${BASE_URL}/quote/${symbolString}?apikey=${FMP_API_KEY}`, 
+      { next: { revalidate: 60 } } 
+    );
+
+    if (!response.ok) {
+      throw new Error(`FMP API Error: ${response.statusText}`);
+    }
+
+    const rawData = await response.json();
+
+    // 如果 API 返回空数组或错误（比如配额用完），抛出异常以触发兜底
+    if (!Array.isArray(rawData) || rawData.length === 0) {
+      throw new Error("FMP returned empty data");
+    }
+
+    // 将 FMP 的数据格式转换为前端需要的格式
+    const assets = targetSymbols.map(target => {
+      // 在返回结果中找到对应的数据
+      const item = rawData.find((d: any) => d.symbol === target.symbol) || {};
       
-      // 美债收益率特殊处理：如果是 ^TNX，价格本身就是百分比
-      const isYield = q.symbol === '^TNX';
-      
+      const price = item.price || 0;
+      const changePercent = item.changesPercentage || 0;
+
       return {
-        symbol: q.symbol,
-        name: mapSymbolToName(q.symbol),
-        value: isYield ? `${price.toFixed(2)}%` : formatPrice(q.symbol, price),
+        symbol: target.symbol,
+        name: target.name,
+        // 格式化数值：如果是收益率(美债)，直接显示数值；否则根据类型加 $ 或纯数字
+        value: target.isYield 
+          ? `${price.toFixed(2)}%` 
+          : formatPrice(target.symbol, price),
+        // 格式化涨跌幅
         change: `${changePercent > 0 ? '+' : ''}${changePercent.toFixed(2)}%`,
+        // 纯数值，用于前端生成智能总结
+        changeValue: changePercent, 
         up: changePercent > 0
       };
     });
 
     return { success: true, data: assets };
-  } catch (error: any) {
-    console.error("Fetch Market Data Error:", error.message || error);
 
-    // ✅ 修复点 2：添加模拟数据兜底
-    // Yahoo Finance 经常屏蔽 Vercel 服务器 IP，导致返回 403 错误。
-    // 这个兜底数据保证了你的网站在 Vercel 上部署后，即使 API 挂了也能正常展示界面。
-    console.log("Returning fallback mock data...");
+  } catch (error: any) {
+    console.error("Fetch Market Data Error:", error.message);
+
+    // --- 兜底数据 (Fallback) ---
+    // 如果 API 挂了或配额用完了，返回这个假数据，保证页面不白屏
     return { 
       success: true, 
-      isMock: true, // 标记为模拟数据，前端会显示"演示模式"标签
+      isMock: true,
       data: [
-        { symbol: '^GSPC', name: '标普 500', value: '5,234.12', change: '+0.45%', up: true },
-        { symbol: '^IXIC', name: '纳斯达克', value: '16,423.50', change: '+0.80%', up: true },
-        { symbol: '^TNX', name: '10年美债', value: '4.25%', change: '-1.20%', up: false },
-        { symbol: 'GC=F', name: '黄金', value: '$2,345.60', change: '+0.55%', up: true },
-        { symbol: 'DX-Y.NYB', name: '美元指数', value: '104.30', change: '+0.12%', up: true },
-        { symbol: '^HSI', name: '恒生指数', value: '16,543.20', change: '-0.30%', up: false },
+        { symbol: '^GSPC', name: '标普 500', value: '5,980.00', change: '+0.45%', changeValue: 0.45, up: true },
+        { symbol: '^IXIC', name: '纳斯达克', value: '19,200.50', change: '+0.80%', changeValue: 0.80, up: true },
+        { symbol: '^TNX', name: '10年美债', value: '4.35%', change: '-1.20%', changeValue: -1.2, up: false },
+        { symbol: 'GCUSD', name: '黄金', value: '$2,650.60', change: '+0.55%', changeValue: 0.55, up: true },
+        { symbol: '^DXY', name: '美元指数', value: '104.30', change: '+0.12%', changeValue: 0.12, up: true },
+        { symbol: '^HSI', name: '恒生指数', value: '18,543.20', change: '-0.30%', changeValue: -0.30, up: false },
       ] 
     };
   }
 }
 
-// 辅助函数：将代码映射为中文名称
-function mapSymbolToName(symbol: string) {
-  const map: Record<string, string> = {
-    '^GSPC': '标普 500',
-    '^IXIC': '纳斯达克',
-    '^TNX': '10年美债',
-    'GC=F': '黄金',
-    'DX-Y.NYB': '美元指数',
-    '^HSI': '恒生指数'
-  };
-  return map[symbol] || symbol;
-}
-
-// 辅助函数：格式化价格
-function formatPrice(symbol: string, price: number) {
-  if (symbol === 'GC=F') return `$${price.toFixed(1)}`;
-  if (symbol === 'DX-Y.NYB') return `${price.toFixed(2)}`;
-  return `${price.toFixed(2)}`;
-}
-
-
-// ----------------------
-// 2. 获取个股基本面数据 (安全边际)
-// ----------------------
+// ----------------------------------------------------------------------
+// 2. 获取个股基本面数据 (安全边际计算)
+// ----------------------------------------------------------------------
 export async function getStockFundamentals(ticker: string) {
   try {
-    // 获取综合概要信息
-    // ✅ 修复点 3：添加 'as any' 解决 'Property price does not exist on type never' 报错
-    const summary = await yahooFinance.quoteSummary(ticker, {
-      modules: ['price', 'financialData', 'defaultKeyStatistics', 'summaryDetail']
-    }) as any;
+    // 清洗 ticker，确保大写
+    const symbol = ticker.toUpperCase();
 
-    const price = summary.price?.regularMarketPrice || 0;
-    const eps = summary.defaultKeyStatistics?.trailingEps || 0;
-    const roe = summary.financialData?.returnOnEquity || 0;
-    // 增长率通常较难直接获取准确的预测值，这里用营收增长率代替，或者留空让用户填
-    const growth = summary.financialData?.revenueGrowth || 0; 
-    const bookValue = summary.defaultKeyStatistics?.bookValue || 0;
-    const cashFlow = summary.financialData?.freeCashflow || 0;
-    const sharesOutstanding = summary.defaultKeyStatistics?.sharesOutstanding || 1;
+    // 并行请求 FMP 的多个接口以获取全面数据
+    // 1. 实时报价 (Quote): 股价, EPS
+    // 2. 关键指标 (Key Metrics): ROE, 每股净资产(Book Value), 每股现金流
+    // 3. 财务增长 (Financial Growth): 营收增长率
+    
+    const [quoteRes, metricsRes, growthRes] = await Promise.all([
+      fetch(`${BASE_URL}/quote/${symbol}?apikey=${FMP_API_KEY}`, { next: { revalidate: 3600 } }),
+      fetch(`${BASE_URL}/key-metrics-ttm/${symbol}?apikey=${FMP_API_KEY}`, { next: { revalidate: 3600 } }),
+      fetch(`${BASE_URL}/financial-growth/${symbol}?limit=1&apikey=${FMP_API_KEY}`, { next: { revalidate: 3600 } })
+    ]);
 
-    // 计算每股现金流 (简单估算)
-    const cashFlowPerShare = cashFlow && sharesOutstanding ? (cashFlow / sharesOutstanding) : 0;
+    const quoteData = await quoteRes.json();
+    const metricsData = await metricsRes.json();
+    const growthData = await growthRes.json();
+
+    // 检查是否有数据
+    if (!quoteData?.[0]) {
+      return { success: false, error: "未找到该股票信息，请检查代码" };
+    }
+
+    const quote = quoteData[0];
+    const metrics = metricsData?.[0] || {};
+    const growth = growthData?.[0] || {};
 
     return {
       success: true,
       data: {
-        price,
-        eps,
-        roe: (roe * 100).toFixed(2), // 转为百分比
-        growth: (growth * 100).toFixed(2), // 转为百分比
-        bookValue,
-        cashFlow: cashFlowPerShare.toFixed(2)
+        price: quote.price || 0,
+        eps: quote.eps || 0,
+        // FMP 的 roeTTM 是小数 (例如 0.15)，我们需要转为百分比 (15)
+        roe: (metrics.roeTTM ? metrics.roeTTM * 100 : 0).toFixed(2),
+        // 增长率
+        growth: (growth.revenueGrowth ? growth.revenueGrowth * 100 : 0).toFixed(2),
+        // 每股净资产
+        bookValue: metrics.bookValuePerShareTTM ? metrics.bookValuePerShareTTM.toFixed(2) : 0,
+        // 每股自由现金流
+        cashFlow: metrics.freeCashFlowPerShareTTM ? metrics.freeCashFlowPerShareTTM.toFixed(2) : 0
       }
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error(`Fetch Stock Error for ${ticker}:`, error);
-    // 返回错误信息
-    return { success: false, error: "未找到该股票信息，请检查代码 (如 AAPL)" };
+    return { success: false, error: "数据获取失败，请稍后重试" };
   }
+}
+
+// ----------------------------------------------------------------------
+// 辅助函数
+// ----------------------------------------------------------------------
+function formatPrice(symbol: string, price: number) {
+  if (symbol === 'GCUSD') return `$${price.toLocaleString()}`;
+  if (symbol === '^DXY') return `${price.toFixed(2)}`;
+  return `${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
