@@ -22,12 +22,11 @@ export default function MarketReview({ onBack }: { onBack: () => void }) {
   const generateSmartSummary = (data: any[]) => {
     if (!data || data.length === 0) return;
 
-    // 1. 提取关键数据 (注意：这里必须与 actions.ts 中的 symbol 对应)
-    const spx = data.find((i: any) => i.symbol === '^GSPC');
-    const nasdaq = data.find((i: any) => i.symbol === '^IXIC');
-    // FMP 黄金代码通常是 GCUSD
-    const gold = data.find((i: any) => i.symbol === 'GCUSD'); 
-    const bond = data.find((i: any) => i.symbol === '^TNX'); // 10年美债收益率
+    // 🔥 关键修改：这里要匹配 actions.ts 里新的 ETF 代码
+    const spx = data.find((i: any) => i.symbol === 'SPY'); // 标普改成了 SPY
+    const nasdaq = data.find((i: any) => i.symbol === 'QQQ'); // 纳指改成了 QQQ
+    const gold = data.find((i: any) => i.symbol === 'GLD'); // 黄金改成了 GLD
+    const bond = data.find((i: any) => i.symbol === '^TNX'); // 债券通常不变
     
     // 2. 判断市场情绪
     let sentiment = "震荡整理";
