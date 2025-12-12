@@ -88,20 +88,32 @@ export default function Websites() {
                       {/* 图标容器 */}
                       <div className="w-12 h-12 flex-shrink-0 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                         {/* 替换原有的 img 标签内容 */}
+                        {/* 替换开始：更健壮的图标渲染逻辑 */}
                         <img
                           src={
                             website.icon ||
-                            // 添加 fallback 参数，如果找不到图标则显示默认的 globe.svg
-                            // 添加 ttl 参数，设置缓存时间（例如 24小时）
-                            `https://unavatar.io/${new URL(website.url).hostname}?fallback=/globe.svg&ttl=1h`
+                            (() => {
+                              try {
+                                // 安全获取 hostname，防止 url 格式错误导致页面崩溃
+                                const hostname = new URL(website.url).hostname;
+                                // 移除 fallback 参数，因为 unavatar 无法访问你 localhost 的文件
+                                // 这里的 onError 会处理失败的情况
+                                return `https://unavatar.io/${hostname}?ttl=24h`;
+                              } catch (e) {
+                                return "/globe.svg"; // URL 解析失败直接用默认图标
+                              }
+                            })()
                           }
                           alt={website.name}
                           className="w-full h-full object-contain"
                           loading="lazy"
-                          // 建议保留这个 onError 作为最后的防线
                           onError={(e) => {
+                            // 图片加载失败时（unavatar 挂了或者找不到图标），回退到本地图标
                             const target = e.target as HTMLImageElement;
-                            target.src = "/globe.svg"; 
+                            // 防止死循环：如果 globe.svg 也加载失败，就不再重试
+                            if (target.src.indexOf("/globe.svg") === -1) {
+                              target.src = "/globe.svg";
+                            }
                           }}
                         />
                       </div>
