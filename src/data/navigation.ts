@@ -49,6 +49,13 @@ export const websites: Website[] = [
     category: "投资分析",
   },
   {
+    id: "marketbeat",
+    name: "MarketBeat",
+    description: "MarketBeat 提供股票分析、评级和投资建议，涵盖美股、港股等市场",
+    url: "https://www.marketbeat.com/",
+    category: "投资分析",
+  },  
+  {
     id: "Daily Chartbook",
     name: "Daily Chartbook",
     description: "每天更新的市场图表和技术分析，免费也够用，付费可以看更多",
