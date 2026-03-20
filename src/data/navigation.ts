@@ -42,6 +42,36 @@ export interface Tool {
 // 网站聚合数据
 export const websites: Website[] = [
   {
+    id: "AQR Research Insights",
+    name: "AQR Research Insights",
+    description: "AQR（Applied Quantitative Research）是全球领先的量化投资管理公司，由量化大师 Cliff Asness 等人创立。它以将学术严谨性与实际投资相结合而闻名，是因子投资（Factor Investing）和另类资产领域的先驱。",
+    url: "https://www.aqr.com/Insights/Research",
+    category: "投资分析",
+  },  
+  {
+    id: "Citadel Insights",
+    name: "Citadel Insights",
+    description: "Citadel Securities 是全球顶尖的市场做市商（Market Maker），虽然它在业务性质上更偏向卖方流动性提供，但其研究深度和对市场微观结构的理解在买方圈层中极具权威性（与其关联公司 Citadel 对冲基金共享强大的研究底蕴）。",
+    url: "https://www.citadelsecurities.com/news-and-insights/per-mare-necessarium-views-on-rates-financial-conditions/",
+    category: "投资分析",
+  },  
+  {
+    id: "GMO Insights",
+    name: "GMO Insights",
+    description: "GMO 是一家著名的价值导向型资产管理公司，其联合创始人 Jeremy Grantham 以多次准确预警资产泡沫（如2000年科技泡沫、2008年金融危机）而享誉全球。",
+    url: "https://www.gmo.com/europe/research-library/",
+    category: "投资分析",
+  },  
+  {
+    id: "Man Group",
+    name: "Man Group",
+    description: "Man Group 是全球最大的独立对冲基金管理公司之一，总部位于英国。它旗下拥有著名的量化分支 Man AHL 和主动管理分支 Man GLG，在趋势跟踪（CTA）和另类投资方面处于世界顶尖水平。",
+    url: "https://www.man.com/insights",
+    category: "投资分析",
+  },  
+
+
+  {
     id: "ivolatility 周观",
     name: "Ivolatility 周观",
     description: "Ivolatility 每周市场分析与投资策略, 包含期权组合建议",
