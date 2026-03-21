@@ -52,7 +52,7 @@ export const websites: Website[] = [
     id: "Citadel Insights",
     name: "Citadel Insights",
     description: "Citadel Securities 是全球顶尖的市场做市商（Market Maker），虽然它在业务性质上更偏向卖方流动性提供，但其研究深度和对市场微观结构的理解在买方圈层中极具权威性（与其关联公司 Citadel 对冲基金共享强大的研究底蕴）。",
-    url: "https://www.citadelsecurities.com/news-and-insights/",
+    url: "https://www.citadelsecurities.com/news-and-insights/category/market-insights/",
     category: "投资分析",
   },  
   {
