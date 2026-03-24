@@ -135,6 +135,14 @@ export const websites: Website[] = [
     category: "市场&数据",
   },
   {
+    id: "companies-market-cap",
+    name: "Companies by Market Cap",
+    description: "按市值排列的全球资产",
+    url: "https://companiesmarketcap.com/assets-by-market-cap/",
+    category: "市场&数据",
+  },
+  
+  {
     id: "investopedia",
     name: "Investopedia",
     description: "投资教育和金融知识平台",
