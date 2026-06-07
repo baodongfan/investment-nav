@@ -2,273 +2,143 @@
 
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
-import { websites, tutorials, tools } from '@/data/navigation';
+import { websites } from '@/data/navigation';
+import { useMemo, useState } from 'react';
+import WebsiteIcon from '@/components/WebsiteIcon'; // 1. 引入新组件
 
 export default function Home() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('全部');
+
+  const categories = useMemo(() => {
+    const cats = [...new Set(websites.map((w) => w.category))];
+    return ['全部', ...cats.sort()];
+  }, []);
+
+  const filteredWebsites = useMemo(() => {
+    if (selectedCategory === '全部') return websites;
+    return websites.filter((w) => w.category === selectedCategory);
+  }, [selectedCategory]);
+
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-[#F9FAFB] dark:bg-black font-sans">
       <Navigation />
 
-      {/* Hero Section 保持不变 */}
-      <section className="bg-gradient-to-r from-violet-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-20">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white mb-4">
-            🚀 投资导航
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
+        <div className="mb-10">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-3">
+            投资网站聚合
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            📈 专为美股&加密货币投资而生
+          <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl">
+            由 Brandon 精选的常用投资资源，涵盖美股分析、筛选及投资教育网站。
           </p>
-          <p className="text-lg text-gray-500 dark:text-gray-400 mb-12">
-            聚合投资网站、投资教程、投资工具，100%免费使用
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link
-              href="/tools"
-              className="px-8 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-semibold"
-            >
-              开始使用工具
-            </Link>
-            <Link
-              href="/websites"
-              className="px-8 py-3 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition font-semibold"
-            >
-              浏览教程
-            </Link>
-          </div>
-          <div className="flex justify-center gap-12 mt-12 text-center">
-            <div>
-              <div className="text-3xl font-bold text-violet-600">7+</div>
-              <p className="text-gray-600 dark:text-gray-400">投资工具</p>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-violet-600">10+</div>
-              <p className="text-gray-600 dark:text-gray-400">教程分类</p>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-violet-600">30+</div>
-              <p className="text-gray-600 dark:text-gray-400">精选网站</p>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-violet-600">100%</div>
-              <p className="text-gray-600 dark:text-gray-400">免费使用</p>
-            </div>
-          </div>
-        </div>
-      </section>
+         </div>
 
-      {/* Features Section - 修改五大核心功能卡片内部动画 */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-black dark:text-white mb-16">
-            五大核心功能
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <Link
-              href="/websites"
-              // 1. 添加 group 类
-              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-900 group"
-            >
-              {/* 2. 添加图标动画 */}
-              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">🌐</div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                投资网站聚合
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                聚合全球优质投资网站，包含美股投资、加密货币投资、Web3空投，一站式导航
-              </p>
-            </Link>
-
-            {/* Feature 2 */}
-            <Link
-              href="/tutorials"
-              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-900 group"
-            >
-              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">📚</div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                投资系统教程
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                美股投资、加密货币投资、美股券商开户、境外银行开户、出入金资金流转、Web3空投，一站式教程汇总
-              </p>
-            </Link>
-
-            {/* Feature 3 */}
-            <Link
-              href="/articles"
-              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-900 group"
-            >
-              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">📄</div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                投资精选文章
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                精选优质投资分析文章，涵盖美股投资与加密货币投资，深度解析市场趋势与投资策略
-              </p>
-            </Link>
-
-            {/* Feature 4 */}
-            <Link
-              href="/tools"
-              className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-white dark:bg-gray-900 group"
-            >
-              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">🛠️</div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                投资工具支持
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                DCF美股估值器、DCA计算器、FIRE财富自由规划等实用投资工具
-              </p>
-            </Link>
-
-            {/* Feature 5 */}
-            <div className="p-8 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-gray-900 group">
-              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">🖼️</div>
-              <h3 className="text-xl font-bold text-black dark:text-white mb-2">
-                一图看懂投资
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                复杂投资概念简化展示，投资小白也能快速理解
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tutorials Section 保持不变 */}
-      <section className="py-20 px-4 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-black dark:text-white mb-4">
-            投资系统教程
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-12">
-            境外银行开户、出入金资金流转、美股投资、加密货币投资、Web3空投，一站式教程汇总
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {tutorials.slice(0, 6).map((tutorial) => (
-              <div
-                key={tutorial.id}
-                className="p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-              >
-                <span className="inline-block px-3 py-1 bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200 rounded-full text-sm font-semibold mb-3">
-                  {tutorial.category}
-                </span>
-                <h3 className="text-lg font-bold text-black dark:text-white mb-2">
-                  {tutorial.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {tutorial.description}
-                </p>
-              </div>
-            ))}
-          </div>
-          <Link
-            href="/tutorials"
-            className="inline-block px-6 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-semibold"
-          >
-            浏览全部教程
-          </Link>
-        </div>
-      </section>
-
-      {/* Tools Section 保持不变 */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-black dark:text-white mb-4">
-            专业投资工具
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-12">
-            DCF美股估值器、DCA计算器、FIRE财富自由规划等实用投资工具
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {tools.slice(0, 3).map((tool) => (
-              <div
-                key={tool.id}
-                className="p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-              >
-                <h3 className="text-lg font-bold text-black dark:text-white mb-2">
-                  {tool.name}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                  {tool.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {tool.features.slice(0, 2).map((feature, i) => (
-                    <span
-                      key={i}
-                      className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded"
+        <div className="bg-white dark:bg-gray-900 rounded-[2rem] border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+          
+          <div className="border-b border-gray-100 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm sticky top-0 z-10 px-6 py-4">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0 scroll-smooth">
+              <div className="flex p-1.5 bg-gray-100 dark:bg-gray-800/80 rounded-xl whitespace-nowrap">
+                {categories.map((category) => {
+                  const isSelected = selectedCategory === category;
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
+                      className={`
+                        relative px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ease-out
+                        ${isSelected 
+                          ? 'bg-white dark:bg-gray-700 text-black dark:text-white shadow-sm' 
+                          : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                        }
+                      `}
                     >
-                      {feature}
-                    </span>
-                  ))}
-                </div>
+                      {category}
+                    </button>
+                  );
+                })}
               </div>
-            ))}
-          </div>
-          <Link
-            href="/tools"
-            className="inline-block px-6 py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition font-semibold"
-          >
-            查看全部工具
-          </Link>
-        </div>
-      </section>
-
-      {/* CTA Section 保持不变 */}
-      <section className="py-20 px-4 bg-gradient-to-r from-violet-600 to-indigo-600">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-white mb-8">
-            准备开始投资之旅了吗？
-          </h2>
-          <p className="text-xl text-violet-100 mb-12">
-            加入数万美股/加密货币投资者大家庭，实现财富自由！
-          </p>
-          <div className="flex justify-center gap-4 flex-wrap">
-            <Link
-              href="/tools"
-              className="px-8 py-3 bg-white text-violet-600 rounded-lg hover:bg-gray-100 transition font-semibold"
-            >
-              立即开始使用
-            </Link>
-            <Link
-              href="/websites"
-              className="px-8 py-3 bg-violet-700 text-white rounded-lg hover:bg-violet-800 transition font-semibold"
-            >
-              浏览投资网站
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer 保持不变 */}
-      <footer className="bg-black dark:bg-gray-950 text-white py-12 px-4">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-xl font-bold mb-4">🚀 投资导航</h3>
-            <p className="text-gray-400">
-              轻松开启投资之旅，实现财富自由梦想
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">快速链接</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li><Link href="/websites" className="hover:text-white">网站聚合</Link></li>
-              <li><Link href="/tutorials" className="hover:text-white">投资教程</Link></li>
-              <li><Link href="/tools" className="hover:text-white">投资工具</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">关注我们</h4>
-            <div className="flex gap-4 text-gray-400">
-              <a href="#" className="hover:text-white">Twitter</a>
-              <a href="#" className="hover:text-white">YouTube</a>
-              <a href="#" className="hover:text-white">Telegram</a>
             </div>
           </div>
+
+          <div className="p-6 md:p-8 bg-white dark:bg-gray-900 min-h-[500px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+              {filteredWebsites.map((website) => (
+                <a
+                  key={website.id}
+                  href={website.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    group relative flex flex-col p-6 h-full
+                    rounded-2xl border border-gray-100 dark:border-gray-800
+                    bg-white dark:bg-gray-800/20
+                    hover:border-violet-200 dark:hover:border-violet-900
+                    hover:shadow-md hover:shadow-violet-100/50 dark:hover:shadow-none
+                    transition-all duration-300 ease-in-out
+                  "
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-4">
+                      {/* 图标容器 */}
+                      <div className="w-12 h-12 flex-shrink-0 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 overflow-hidden">
+                        
+                        {/* 2. 使用新封装的 WebsiteIcon 组件替代原有的 img */}
+                        <WebsiteIcon 
+                          website={website} 
+                          className="w-full h-full" 
+                        />
+
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+                          {website.name}
+                        </h3>
+                        <span className="text-xs text-gray-400 font-mono mt-0.5 block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          {(() => {
+                            try {
+                              return new URL(website.url).hostname.replace('www.', '');
+                            } catch { return ''; }
+                          })()}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="w-8 h-8 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-400 group-hover:bg-violet-100 dark:group-hover:bg-violet-900/50 group-hover:text-violet-600 transition-all duration-300">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6 line-clamp-2 flex-grow">
+                    {website.description}
+                  </p>
+
+                  <div className="flex items-center gap-2 mt-auto">
+                    <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-orange-900/30">
+                      {website.category}
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+
+            {filteredWebsites.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">未找到相关网站</h3>
+                <p className="text-gray-500">尝试切换其他分类看看吧</p>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 投资导航. 保留所有权利。</p>
-        </div>
+      </main>
+
+      <footer className="max-w-7xl mx-auto py-12 px-6 text-center">
+        <p className="text-gray-500 text-sm">
+          © 2024 投资导航. 保留所有权利。
+        </p>
       </footer>
     </div>
   );

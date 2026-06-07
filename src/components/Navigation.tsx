@@ -20,22 +20,23 @@ import {
 } from 'lucide-react';
 
 export default function Navigation() {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  // Initialize with system preference as default
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark') return true;
+      if (saved === 'light') return false;
+      if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return true;
+      return false;
+    } catch (e) {
+      return false;
+    }
+  });
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
-  // theme init
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('theme');
-      if (saved === 'dark') setIsDarkMode(true);
-      else if (saved === 'light') setIsDarkMode(false);
-      else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setIsDarkMode(true);
-    } catch (e) {}
-  }, []);
-
-  // apply theme class and persist
-  useEffect(() => {
+  // Apply theme on mount and whenever it changes (before paint)
+  useLayoutEffect(() => {
     const root = document.documentElement;
     const body = document.body;
     if (isDarkMode) {
@@ -65,15 +66,9 @@ export default function Navigation() {
   const toggleSidebar = () => setIsOpen(v => !v);
   const toggleMobile = () => setMobileOpen(v => !v);
 
-  // 2. 修改菜单配置，使用组件而不是字符串
-  // 注意：这里的 icon 属性现在直接存储 React 元素
   const items = [
-    { href: '/', label: '主页', icon: <Home size={20} /> },
-    { href: '/websites', label: '网站聚合', icon: <Globe size={20} /> },
-    { href: 'https://brandonv5.com', label: '博客文章', icon: <Rss  size={20} /> }, // 你也可以换成 <Calculator size={20} /> 
-    { href: '/tutorials', label: '投资教程', icon: <BookOpen size={20} /> },
-    { href: '/articles', label: '投资精选文章', icon: <FileText size={20} /> },
-    { href: '/tools', label: '投资工具', icon: <Wrench size={20} /> }, // 你也可以换成 <Calculator size={20} />
+    { href: '/', label: '网站聚合', icon: <Globe size={20} /> },
+    { href: 'https://brandonv5.com', label: '博客文章', icon: <Rss  size={20} /> },
     { href: '/about', label: '关于本站', icon: <User size={20} /> },
   ];
 

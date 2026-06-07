@@ -61,13 +61,16 @@ export default function About() {
                 我的想法
               </h3>
               <p className="text-gray-600 dark:text-gray-400 text-lg mb-4 leading-relaxed">
-                建立一个全面、免费的投资导航平台，自用的同时分享优质的投资资源和工具。
+                一个全面、免费的投资导航平台，自用之余，也为你精选优质的投资资源。
               </p>
               <p className="text-gray-600 dark:text-gray-400 text-lg mb-4 leading-relaxed">
-                我相信，长期定投可能是普通人财富自由的最简单方式。通过系统的教育和实用的工具，我希望让投资变得更加简单、透明和民主化。
+                我相信，长期定投是普通人通往财富自由最简单的路径。通过系统化的信息整理与清晰的导航，我希望让投资变得更简单、更透明、更民主化。
               </p>
-              <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
-                这个平台完全免费，初心就是为投资者社区做出贡献。正如项目说明中所述，这是专为美股和加密货币投资而生的平台。
+              <p className="text-gray-600 dark:text-gray-400 text-lg mb-4 leading-relaxed">
+                本站完全免费，初心是为投资者社区贡献一份力量。专注美股与加密世界，不提供投资工具，只为你指路。
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed italic">
+                —— 为每一位长期主义者而建。
               </p>
             </div>
           </div>
@@ -104,6 +107,17 @@ export default function About() {
                     <p className="font-semibold text-black dark:text-white group-hover:text-blue-500">@Brandon_Fan</p>
                   </div>
                 </a>
+
+                {/* WeChat & Phone Card */}
+                <div className="flex items-center p-4 bg-white dark:bg-black rounded-xl border border-gray-100 dark:border-gray-800">
+                  <div className="w-10 h-10 flex items-center justify-center bg-green-100 dark:bg-green-900/30 text-green-600 rounded-lg mr-4">
+                    📱
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">微信</p>
+                    <p className="font-semibold text-black dark:text-white">brandon4bd</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

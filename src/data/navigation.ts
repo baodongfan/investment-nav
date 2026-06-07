@@ -8,34 +8,6 @@ export interface Website {
   icon?: string; // 问号代表可选，不填就显示默认：网站图标URL
 }
 
-export interface Tutorial {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  url?: string;
-}
-
-export interface Article {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  url?: string;
-  content?: string;  // 新增：站内文章内容
-  date?: string;  // 新增：发布日期
-  author?: string; // 新增：作者
-}
-
-export interface Tool {
-  id: string;
-  name: string;
-  description: string;
-  features: string[];
-  url?: string;
-  isFree: boolean;
-}
-
 
 
 
@@ -204,77 +176,5 @@ export const websites: Website[] = [
     description: "CBOE 提供的期权教育资源，涵盖基础知识、交易策略和风险管理等内容",
     url: "https://www.optionseducation.org/",
     category: "期权工具",
-  },
-];
-
-// 教程数据
-export const tutorials: Tutorial[] = [
-
-  {
-    id: "tiger-college",
-    title: "老虎学堂",
-    description: "老虎证券官方投资教程，涵盖美股、港股、基金等多方面内容",
-    category: "港美股投资",
-    url: "https://www.laohu8.com/college",
-  },
-
-];
-
-// 文章数据
-export const articles: Article[] = [
-  {
-    id: "chuizhi_futu",
-    title: "4种垂直价差期权策略详解",
-    description: "垂直价差可以作为从基础期权策略进阶的桥梁",
-    url: "https://www.futunn.com/learn/detail-bullish-options-spread-in-a-bull-market-77651-230382091",
-    category: "期权策略",
-  },
-  
-];
-
-// 投资工具数据
-export const tools: Tool[] = [
-  {
-    id: "finviz-screener",
-    name: "美股筛选器",
-    description: "自定义程度高，功能强大的美股筛选工具，根据多种条件筛选股票",
-    features: ["实时反馈", "多条件筛选"],
-    url: "https://finviz.com/screener.ashx",
-    isFree: true,
-  },
-  {
-    id: "dca-calculator",
-    name: "DCA定投计算器",
-    description: "计算定期定额投资的复合收益",
-    features: ["复合计算", "可视化图表", "多币种支持"],
-    isFree: true,
-  },
-  {
-    id: "dcf-valuation",
-    name: "DCF现金流估值模型",
-    description: "基于折现现金流模型进行企业估值，计算股票内在价值",
-    features: ["现金流预测", "敏感性分析", "估值对标"],
-    isFree: true,
-  },
-  {
-    id: "stock-screener",
-    name: "美股筛选器",
-    description: "根据多维度条件筛选美股",
-    features: ["PE/PB筛选", "增长率分析", "行业分类"],
-    isFree: true,
-  },
-  {
-    id: "fire-calculator",
-    name: "FIRE财富自由规划器",
-    description: "计算达到财务自由需要的时间和资金",
-    features: ["自动计算", "场景模拟", "目标追踪"],
-    isFree: true,
-  },
-  {
-    id: "crypto-portfolio",
-    name: "加密货币投资组合追踪",
-    description: "跟踪和分析你的加密资产配置",
-    features: ["实时行情", "收益统计", "配置分析"],
-    isFree: true,
   },
 ];
